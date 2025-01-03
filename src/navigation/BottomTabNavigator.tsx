@@ -13,11 +13,13 @@ export function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#ff0000',
+        tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#666666',
-        // tabBarStyle: {
-        //   backgroundColor: '#000000',
-        // },
+        tabBarStyle: {
+          backgroundColor: '#000000',
+          // borderTopWidth: 0,
+          borderTopColor: '#666666',
+        },
       }}
     >
       <Tab.Screen
