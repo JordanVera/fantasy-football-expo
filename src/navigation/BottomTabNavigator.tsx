@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { DashboardScreen } from '../screens/DashboardScreen';
 import { LoginScreen } from '../screens/LoginScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 // import { Header } from '../components/Topbar';
 
 const Tab = createBottomTabNavigator();
@@ -11,9 +12,12 @@ export function BottomTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        // header: () => <Header />,
+        headerShown: false,
         tabBarActiveTintColor: '#ff0000',
         tabBarInactiveTintColor: '#666666',
+        // tabBarStyle: {
+        //   backgroundColor: '#000000',
+        // },
       }}
     >
       <Tab.Screen
@@ -40,6 +44,15 @@ export function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="login" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="settings" size={size} color={color} />
           ),
         }}
       />
