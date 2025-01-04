@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { DashboardScreen } from '../screens/DashboardScreen';
-import { LoginScreen } from '../screens/LoginScreen';
+import { AuthScreen } from '../screens/AuthScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 // import { Header } from '../components/Topbar';
 
@@ -41,8 +41,8 @@ export function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Login"
-        component={LoginScreen}
+        name="Auth"
+        component={AuthScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="login" size={size} color={color} />
