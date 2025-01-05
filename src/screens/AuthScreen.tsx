@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 export function AuthScreen() {
+  const navigation = useNavigation();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,8 +19,12 @@ export function AuthScreen() {
       } else {
         await signup(email, password, name);
       }
-      // Navigation will be handled by your navigation container based on auth state
+      // @ts-ignore - Navigate to Home screen after successful auth
+      navigation.navigate('Home');
     } catch (error) {
+      console.log('_____error_____');
+      console.log(error);
+
       setError(
         isLogin
           ? 'Login failed. Please check your credentials.'
@@ -36,8 +42,8 @@ export function AuthScreen() {
   };
 
   return (
-    <View className="items-center justify-center flex-1 px-4">
-      <Text className="mb-8 text-2xl font-bold">
+    <View className="items-center justify-center flex-1 px-4 bg-gray-900">
+      <Text className="mb-8 text-2xl font-bold text-white">
         {isLogin ? 'Login' : 'Sign Up'}
       </Text>
 
@@ -45,32 +51,35 @@ export function AuthScreen() {
 
       {!isLogin && (
         <TextInput
-          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+          className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
           placeholder="Name"
           value={name}
           onChangeText={setName}
+          placeholderTextColor="#6B7280"
         />
       )}
 
       <TextInput
-        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded"
+        className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        placeholderTextColor="#6B7280"
       />
 
       <TextInput
-        className="w-full px-4 py-2 mb-6 border border-gray-300 rounded"
+        className="w-full px-4 py-2 mb-6 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        placeholderTextColor="#6B7280"
       />
 
       <TouchableOpacity
-        className="w-full px-6 py-3 mb-4 bg-blue-500 rounded-lg"
+        className="w-full px-6 py-3 mb-4 bg-blue-600 rounded-lg"
         onPress={handleSubmit}
       >
         <Text className="font-semibold text-center text-white">
@@ -79,7 +88,7 @@ export function AuthScreen() {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={toggleAuthMode}>
-        <Text className="text-blue-500">
+        <Text className="text-blue-400">
           {isLogin
             ? "Don't have an account? Sign up"
             : 'Already have an account? Login'}

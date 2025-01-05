@@ -26,6 +26,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadStoredUser();
   }, []);
 
+  useEffect(() => {
+    console.log('_____user_____');
+    console.log(user);
+  }, [user]);
+
   const loadStoredUser = async () => {
     try {
       const storedUser = await AsyncStorage.getItem('user');
