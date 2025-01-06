@@ -27,23 +27,21 @@ function MakePicksModal() {
       </Button>
       <Modal
         isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-        }}
+        onClose={() => setShowModal(false)}
         size="md"
-        className="max-h-[90vh] overflow-y-auto mt-16"
+        className="max-h-[90vh] overflow-y-auto mt-16 border "
       >
         <ModalBackdrop />
-        <ModalContent>
+        <ModalContent className="bg-gray-900 border-gray-700">
           <ModalHeader>
-            <Text className="text-xl font-bold text-typography-950">
+            <Text className="text-xl font-bold text-white">
               Make Your Picks
             </Text>
             <ModalCloseButton>
               <Icon
                 as={XIcon}
                 size="md"
-                className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900 text-red-500"
+                className="stroke-gray-400 group-[:hover]/modal-close-button:stroke-gray-300 group-[:active]/modal-close-button:stroke-gray-200"
               />
             </ModalCloseButton>
           </ModalHeader>
