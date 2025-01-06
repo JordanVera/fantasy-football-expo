@@ -19,7 +19,7 @@ export function HomeScreen() {
   return (
     <View className="items-center justify-center flex-1 w-full bg-gray-900">
       <Text className="mb-4 text-2xl text-white">
-        Welcome, {user?.name || 'User'}!
+        Welcome, {user?.username || 'User'}!
       </Text>
       <Text className="mb-8 text-white">{user?.email}</Text>
 

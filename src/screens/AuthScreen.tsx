@@ -8,16 +8,32 @@ export function AuthScreen() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState('');
   const { login, signup } = useAuth();
 
   const handleSubmit = async () => {
     try {
+      if (!isLogin && password !== confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
+
       if (isLogin) {
         await login(email, password);
       } else {
-        await signup(email, password, name);
+        await signup({
+          email,
+          password,
+          firstname,
+          lastname,
+          username,
+          phoneNumber,
+        });
       }
       // @ts-ignore - Navigate to Home screen after successful auth
       navigation.navigate('Home');
@@ -38,7 +54,11 @@ export function AuthScreen() {
     setError('');
     setEmail('');
     setPassword('');
-    setName('');
+    setConfirmPassword('');
+    setFirstname('');
+    setLastname('');
+    setUsername('');
+    setPhoneNumber('');
   };
 
   return (
@@ -50,13 +70,47 @@ export function AuthScreen() {
       {error ? <Text className="mb-4 text-red-500">{error}</Text> : null}
 
       {!isLogin && (
-        <TextInput
-          className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
-          placeholderTextColor="#6B7280"
-        />
+        <>
+          <View className="flex-row w-full gap-4">
+            <View className="flex-1">
+              <TextInput
+                className="px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+                placeholder="First Name"
+                value={firstname}
+                onChangeText={setFirstname}
+                placeholderTextColor="#6B7280"
+              />
+            </View>
+
+            <View className="flex-1">
+              <TextInput
+                className="px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+                placeholder="Last Name"
+                value={lastname}
+                onChangeText={setLastname}
+                placeholderTextColor="#6B7280"
+              />
+            </View>
+          </View>
+
+          <TextInput
+            className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+            autoCapitalize="none"
+            placeholderTextColor="#6B7280"
+          />
+
+          <TextInput
+            className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType="phone-pad"
+            placeholderTextColor="#6B7280"
+          />
+        </>
       )}
 
       <TextInput
@@ -70,13 +124,24 @@ export function AuthScreen() {
       />
 
       <TextInput
-        className="w-full px-4 py-2 mb-6 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+        className="w-full px-4 py-2 mb-4 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         placeholderTextColor="#6B7280"
       />
+
+      {!isLogin && (
+        <TextInput
+          className="w-full px-4 py-2 mb-6 text-white bg-gray-800 border border-gray-700 rounded placeholder:text-gray-500"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+          placeholderTextColor="#6B7280"
+        />
+      )}
 
       <TouchableOpacity
         className="w-full px-6 py-3 mb-4 bg-blue-600 rounded-lg"

@@ -33,13 +33,20 @@ export class ApiService {
     return response.json();
   }
 
-  async signup(email: string, password: string, name?: string) {
+  async signup(params: {
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    phoneNumber: string;
+  }) {
     const response = await fetch(`${this.baseUrl}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password, name }),
+      body: JSON.stringify(params),
     });
 
     if (!response.ok) {

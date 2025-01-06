@@ -11,7 +11,14 @@ type User = {
 type AuthContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, name?: string) => Promise<void>;
+  signup: (params: {
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    phoneNumber: string;
+  }) => Promise<void>;
   logout: () => Promise<void>;
   isLoading: boolean;
 };
@@ -55,9 +62,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signup = async (email: string, password: string, name?: string) => {
+  const signup = async (params: {
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    username: string;
+    phoneNumber: string;
+  }) => {
     try {
-      const { user, token } = await api.signup(email, password, name);
+      const { user, token } = await api.signup(params);
       await AsyncStorage.setItem('user', JSON.stringify(user));
       await AsyncStorage.setItem('token', token);
       setUser(user);
