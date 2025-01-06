@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { api } from '../services/ApiService';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Box } from '@/components/ui/box';
 
 export function HomeScreen() {
   const [testResult, setTestResult] = useState<string>('');
@@ -18,6 +19,9 @@ export function HomeScreen() {
 
   return (
     <View className="items-center justify-center flex-1 w-full bg-gray-900">
+      <Box className="p-5 bg-primary-500">
+        <Text className="text-typography-0">This is the Box</Text>
+      </Box>
       <Text className="mb-4 text-2xl text-white">
         Welcome, {user?.username || 'User'}!
       </Text>
