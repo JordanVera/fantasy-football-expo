@@ -1,4 +1,11 @@
+import { Icon } from '../ui/icon';
+import { View } from 'react-native';
+import TEAMS from '@/src/types/TEAMS';
 import { Button, ButtonText } from '../ui/button';
+import { useAuth } from '../../context/AuthContext';
+import { ChevronUpIcon, ChevronDownIcon } from 'lucide-react-native';
+import { getAvailableWeeks, getStartingWeek } from '@/src/utils/dates';
+import { ActionsheetScrollView } from '@/src/components/ui/actionsheet';
 
 import {
   Accordion,
@@ -10,11 +17,6 @@ import {
   AccordionContentText,
   AccordionIcon,
 } from '@/src/components/ui/accordion';
-import { Icon } from '../ui/icon';
-import { ChevronUpIcon, ChevronDownIcon } from 'lucide-react-native';
-import { getAvailableWeeks, getStartingWeek } from '@/src/utils/dates';
-import { useAuth } from '../../context/AuthContext';
-import TEAMS from '@/src/types/TEAMS';
 
 import {
   Select,
@@ -28,36 +30,6 @@ import {
   SelectDragIndicatorWrapper,
   SelectDragIndicator,
 } from '@/src/components/ui/select';
-import { View, Platform } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { ActionsheetScrollView } from '@/src/components/ui/actionsheet';
-
-// {step === 1 && (
-
-//     <Text className="mb-4 text-lg font-bold">Select Week</Text>
-
-//     <Select>
-//       <SelectTrigger variant="outline" size="md">
-//         <SelectInput placeholder="Select option" />
-//         {/* <SelectIcon className="mr-3" as={ChevronDownIcon} /> */}
-//       </SelectTrigger>
-//       <SelectPortal>
-//         <SelectBackdrop />
-//         <SelectContent>
-//           <SelectDragIndicatorWrapper>
-//             <SelectDragIndicator />
-//           </SelectDragIndicatorWrapper>
-//           {weeks.map((week) => (
-//             <SelectItem
-//               key={week}
-//               label={`Week ${week}`}
-//               value={week.toString()}
-//             />
-//           ))}
-//         </SelectContent>
-//       </SelectPortal>
-//     </Select>
-// )}
 
 export default function WeeksAccordion() {
   const availableWeeks = getAvailableWeeks();
@@ -78,7 +50,11 @@ export default function WeeksAccordion() {
       className="my-5 border border-outline-200"
     >
       {availableWeeks.map((week, index) => (
-        <AccordionItem key={`week-${week}`} value={week.toString()}>
+        <AccordionItem
+          key={`week-${week}`}
+          value={week.toString()}
+          className="border-b border-gray-400"
+        >
           <AccordionHeader>
             <AccordionTrigger>
               {({ isExpanded }) => {

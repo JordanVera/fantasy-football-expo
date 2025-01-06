@@ -5,6 +5,7 @@ import { Center } from '@/src/components/ui/center';
 import { Icon } from '@/src/components/ui/icon';
 import WeeksAccordion from '@/src/components/accordions/WeeksAccordion';
 import { NUMBER_OF_WEEKS } from '@env';
+import { XIcon } from 'lucide-react-native';
 
 import {
   Modal,
@@ -35,37 +36,20 @@ function MakePicksModal() {
         <ModalBackdrop />
         <ModalContent>
           <ModalHeader>
-            <Text className="text-typography-950">Invite your team</Text>
+            <Text className="text-xl font-bold text-typography-950">
+              Make Your Picks
+            </Text>
             <ModalCloseButton>
-              <Text>close</Text>
-              {/* <Icon
-                as={CloseIcon}
+              <Icon
+                as={XIcon}
                 size="md"
-                className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900"
-              /> */}
+                className="stroke-background-400 group-[:hover]/modal-close-button:stroke-background-700 group-[:active]/modal-close-button:stroke-background-900 group-[:focus-visible]/modal-close-button:stroke-background-900 text-red-500"
+              />
             </ModalCloseButton>
           </ModalHeader>
           <ModalBody>
             <WeeksAccordion />
           </ModalBody>
-          {/* <ModalFooter>
-            <Button
-              variant="outline"
-              action="secondary"
-              onPress={() => {
-                setShowModal(false);
-              }}
-            >
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button
-              onPress={() => {
-                setShowModal(false);
-              }}
-            >
-              <ButtonText>Explore</ButtonText>
-            </Button>
-          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
