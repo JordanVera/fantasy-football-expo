@@ -2,9 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { DashboardScreen } from '../screens/DashboardScreen';
-import { AuthScreen } from '../screens/AuthScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
-// import { Header } from '../components/Topbar';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +16,6 @@ export function BottomTabNavigator() {
         tabBarStyle: {
           backgroundColor: '#000000',
           borderTopColor: '#666666',
-          // borderTopWidth: 0,
         },
       }}
     >
@@ -37,15 +34,6 @@ export function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dashboard" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Auth"
-        component={AuthScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="login" size={size} color={color} />
           ),
         }}
       />

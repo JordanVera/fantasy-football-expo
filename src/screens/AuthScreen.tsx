@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigation } from '@react-navigation/native';
 
 export function AuthScreen() {
-  const navigation = useNavigation();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,8 +33,6 @@ export function AuthScreen() {
           phoneNumber,
         });
       }
-      // @ts-ignore - Navigate to Home screen after successful auth
-      navigation.navigate('Home');
     } catch (error) {
       console.log('_____error_____');
       console.log(error);
