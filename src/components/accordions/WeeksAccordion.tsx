@@ -43,7 +43,7 @@ export default function WeeksAccordion() {
   console.log({ user });
 
   const [picks, setPicks] = useState<any[]>([]);
-  const [selectedWeek, setSelectedWeek] = useState<number>(startingWeek);
+  // const [selectedWeek, setSelectedWeek] = useState<number>(startingWeek);
 
   useEffect(() => {
     console.log({ picks });
@@ -53,9 +53,9 @@ export default function WeeksAccordion() {
     console.log({ picks });
   }, [picks]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (week: number) => {
     try {
-      const response = await api.createPicks(picks, selectedWeek);
+      const response = await api.createPicks(picks, week);
       console.log('Picks submitted successfully:', response);
       // TODO: Add success toast/notification
     } catch (error) {
@@ -155,7 +155,7 @@ export default function WeeksAccordion() {
               ))}
 
               <Button
-                onPress={handleSubmit}
+                onPress={() => handleSubmit(week)}
                 className="bg-blue-600 hover:bg-blue-700"
               >
                 <ButtonText className="text-white">Submit</ButtonText>
