@@ -28,7 +28,9 @@ import {
   SelectDragIndicatorWrapper,
   SelectDragIndicator,
 } from '@/src/components/ui/select';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { ActionsheetScrollView } from '@/src/components/ui/actionsheet';
 
 // {step === 1 && (
 
@@ -76,55 +78,54 @@ export default function WeeksAccordion() {
       className="my-5 border border-outline-200"
     >
       {availableWeeks.map((week, index) => (
-        <>
-          <AccordionItem key={index} value={week.toString()}>
-            <AccordionHeader>
-              <AccordionTrigger>
-                {({ isExpanded }) => {
-                  return (
-                    <>
-                      <AccordionTitleText>Week {week}</AccordionTitleText>
-                      {isExpanded ? (
-                        <AccordionIcon as={ChevronUpIcon} className="ml-3" />
-                      ) : (
-                        <AccordionIcon as={ChevronDownIcon} className="ml-3" />
-                      )}
-                    </>
-                  );
-                }}
-              </AccordionTrigger>
-            </AccordionHeader>
-            <AccordionContent>
-              <View className="flex flex-col gap-4">
-                {[...Array(user?.bullets || 0)].map((_, index) => (
-                  <Select key={index}>
-                    <SelectTrigger>
-                      <SelectInput placeholder={`Pick ${index + 1}`} />
-                      <SelectIcon>
-                        <Icon as={ChevronDownIcon} />
-                      </SelectIcon>
-                    </SelectTrigger>
-                    <SelectPortal>
-                      <SelectContent>
-                        <SelectDragIndicatorWrapper>
-                          <SelectDragIndicator />
-                        </SelectDragIndicatorWrapper>
+        <AccordionItem key={`week-${week}`} value={week.toString()}>
+          <AccordionHeader>
+            <AccordionTrigger>
+              {({ isExpanded }) => {
+                return (
+                  <>
+                    <AccordionTitleText>Week {week}</AccordionTitleText>
+                    {isExpanded ? (
+                      <AccordionIcon as={ChevronUpIcon} className="ml-3" />
+                    ) : (
+                      <AccordionIcon as={ChevronDownIcon} className="ml-3" />
+                    )}
+                  </>
+                );
+              }}
+            </AccordionTrigger>
+          </AccordionHeader>
+          <AccordionContent>
+            <View className="flex flex-col gap-4">
+              {[...Array(user?.bullets || 0)].map((_, index) => (
+                <Select key={`entry-${index}`}>
+                  <SelectTrigger>
+                    <SelectInput placeholder={`Pick ${index + 1}`} />
+                    <SelectIcon>
+                      <Icon as={ChevronDownIcon} />
+                    </SelectIcon>
+                  </SelectTrigger>
+                  <SelectPortal>
+                    <SelectContent className="max-h-64">
+                      <SelectDragIndicatorWrapper>
+                        <SelectDragIndicator />
+                      </SelectDragIndicatorWrapper>
+                      <ActionsheetScrollView>
                         {TEAMS.map((team) => (
-                          <SelectItem label={team} value={team} />
+                          <SelectItem key={team} label={team} value={team} />
                         ))}
-                      </SelectContent>
-                    </SelectPortal>
-                  </Select>
-                ))}
+                      </ActionsheetScrollView>
+                    </SelectContent>
+                  </SelectPortal>
+                </Select>
+              ))}
 
-                <Button className="text-white bg-blue-500">
-                  <ButtonText>Submit</ButtonText>
-                </Button>
-              </View>
-            </AccordionContent>
-          </AccordionItem>
-          {/* <Divider /> */}
-        </>
+              <Button className="text-white bg-blue-500">
+                <ButtonText>Submit</ButtonText>
+              </Button>
+            </View>
+          </AccordionContent>
+        </AccordionItem>
       ))}
     </Accordion>
   );
