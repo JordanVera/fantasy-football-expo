@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Pressable,
+} from 'react-native';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -59,9 +65,16 @@ export function AuthScreen() {
 
   return (
     <View className="items-center justify-center flex-1 px-4 bg-gray-900">
-      <Text className="mb-8 text-2xl font-bold text-white">
-        {isLogin ? 'Login' : 'Sign Up'}
-      </Text>
+      <View className="flex-col w-full gap-3">
+        <Text className="text-4xl font-bold text-white">
+          {isLogin ? 'Login' : 'Sign Up'}
+        </Text>
+        <Text className="mb-8 text-left text-white text-md">
+          {isLogin
+            ? 'Login to start using NFL Last Longer'
+            : 'Sign Up to start using NFL Last Longer'}
+        </Text>
+      </View>
 
       {error ? <Text className="mb-4 text-red-500">{error}</Text> : null}
 
@@ -127,6 +140,15 @@ export function AuthScreen() {
         secureTextEntry
         placeholderTextColor="#6B7280"
       />
+
+      {isLogin && (
+        <Pressable
+          // onPress={() => setShowPassword(!showPassword)}
+          className="flex flex-row justify-end w-full"
+        >
+          <Text className="mb-8 text-blue-500 underline">Forgot Password?</Text>
+        </Pressable>
+      )}
 
       {!isLogin && (
         <TextInput

@@ -1,4 +1,5 @@
 import { API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export class ApiService {
   private baseUrl: string;
@@ -51,6 +52,24 @@ export class ApiService {
 
     if (!response.ok) {
       throw new Error('Signup failed');
+    }
+
+    return response.json();
+  }
+
+  async createPicks(picks: { pick: string; entry: number }[], week: number) {
+    const response = await fetch(`${this.baseUrl}/picks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ picks, week }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to create picks');
     }
 
     return response.json();

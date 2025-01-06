@@ -20,12 +20,12 @@ function Navigation() {
 
 export default function App() {
   return (
-    <GluestackUIProvider mode="light">
-      <NavigationContainer>
-        <AuthProvider>
+    <AuthProvider>
+      <GluestackUIProvider mode="light">
+        <NavigationContainer>
           <Navigation />
-        </AuthProvider>
-      </NavigationContainer>
-    </GluestackUIProvider>
+        </NavigationContainer>
+      </GluestackUIProvider>
+    </AuthProvider>
   );
 }

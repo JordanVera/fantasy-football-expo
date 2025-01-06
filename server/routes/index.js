@@ -1,5 +1,6 @@
 import express from 'express';
 import authRoutes from './auth.js';
+import picksRoutes from './picks.js';
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.get('/test', (req, res) => {
 
 // Mount auth routes
 router.use('/auth', authRoutes);
+router.use('/picks', picksRoutes);
 
 export default router;

@@ -2,8 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { api } from '../services/ApiService';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Box } from '@/src/components/ui/box';
-import MakePicksActionSheet from '@/src/components/MakePicksActionSheet';
+import MakePicksModal from '@/src/components/modals/MakePicksModal';
 
 export function HomeScreen() {
   const [testResult, setTestResult] = useState<string>('');
@@ -23,7 +22,7 @@ export function HomeScreen() {
       {/* <Box className="p-5 bg-primary-500">
         <Text className="text-typography-0">This is the Box</Text>
       </Box> */}
-      <MakePicksActionSheet />
+      <MakePicksModal />
       <Text className="mb-4 text-2xl text-white">
         Welcome, {user?.username || 'User'}!
       </Text>
