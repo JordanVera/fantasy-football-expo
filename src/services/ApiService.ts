@@ -18,7 +18,7 @@ export class ApiService {
   }
 
   async login(email: string, password: string) {
-    const response = await fetch(`${this.baseUrl}/login`, {
+    const response = await fetch(`${this.baseUrl}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export class ApiService {
     username: string;
     phoneNumber: string;
   }) {
-    const response = await fetch(`${this.baseUrl}/signup`, {
+    const response = await fetch(`${this.baseUrl}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
