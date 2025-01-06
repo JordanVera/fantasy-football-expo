@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import '@/global.css';
-import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
+import { GluestackUIProvider } from './src/components/ui/gluestack-ui-provider';
 import { BottomTabNavigator } from './src/navigation/BottomTabNavigator';
 import { AuthNavigator } from './src/navigation/AuthNavigator';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
