@@ -68,7 +68,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: `successfully updated picks for week ${week + 1}`,
+      message: `successfully updated picks for week ${week}`,
     });
   } catch (error) {
     console.error(error);
