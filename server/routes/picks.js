@@ -6,7 +6,9 @@ import { getStartingWeek } from '../utils/dates.js';
 const router = express.Router();
 const prisma = new PrismaClient();
 
+// http POST localhost:3000/api/picks picks:='[{"entry": 0, "pick": "SF"}, {"entry": 1, "pick": "KC"}]' week:=1
 // POST /api/picks
+
 router.post('/', authenticateToken, async (req, res) => {
   const { picks, week } = req.body;
   const userId = req.user.id; // From auth middleware
