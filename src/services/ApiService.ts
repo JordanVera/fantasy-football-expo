@@ -74,6 +74,23 @@ export class ApiService {
 
     return response.json();
   }
+
+  async getAllUsers() {
+    const response = await fetch(`${this.baseUrl}/users/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch users');
+    }
+
+    return response.json();
+  }
 }
 
 // Export a default instance

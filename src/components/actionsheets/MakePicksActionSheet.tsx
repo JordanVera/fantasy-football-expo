@@ -81,8 +81,10 @@ export default function MakePicksActionSheet() {
                 onPress={() => handleWeekSelect(week)}
                 className="flex-row items-center justify-between"
               >
-                <ActionsheetItemText>Week {week}</ActionsheetItemText>
-                <Icon as={ChevronRightIcon} className="text-gray-400" />
+                <ActionsheetItemText className="text-white">
+                  Week {week}
+                </ActionsheetItemText>
+                <Icon as={ChevronRightIcon} className="text-white" />
               </ActionsheetItem>
             ))}
           </ActionsheetScrollView>
@@ -92,7 +94,7 @@ export default function MakePicksActionSheet() {
 
     return (
       <>
-        <View className="flex-row items-center justify-between px-4 py-2">
+        <View className="flex-row items-center justify-between w-full py-2">
           <Button
             // variant="ghost"
             onPress={() => setStep('week')}
@@ -106,24 +108,24 @@ export default function MakePicksActionSheet() {
           </Text>
         </View>
 
-        <ActionsheetScrollView>
-          <View className="p-4 space-y-4 ">
+        <ActionsheetScrollView className="pt-5">
+          <View className="flex gap-10 space-y-4">
             {[...Array(user?.bullets || 0)].map((_, index) => (
               <View key={index} className="space-y-2">
-                <Text className="text-white">Entry {index + 1}</Text>
+                <Text className="mb-3 text-white">Entry {index + 1}</Text>
                 <View className="flex-row flex-wrap gap-2">
                   {TEAMS.map((team) => (
                     <Button
                       key={team}
-                      variant={
-                        picks.find((p) => p.entry === index && p.pick === team)
-                          ? 'solid'
-                          : 'outline'
-                      }
+                      variant={'solid'}
                       onPress={() => handlePickChange(team, index)}
-                      className="flex-grow basis-[30%]"
+                      className={`flex-grow basis-[30%] ${
+                        picks.find((p) => p.entry === index && p.pick === team)
+                          ? 'bg-green-500'
+                          : 'bg-zinc-800'
+                      }`}
                     >
-                      <ButtonText>{team}</ButtonText>
+                      <ButtonText className="text-white">{team}</ButtonText>
                     </Button>
                   ))}
                 </View>
@@ -147,9 +149,9 @@ export default function MakePicksActionSheet() {
 
       <Actionsheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ActionsheetBackdrop />
-        <ActionsheetContent className="max-h-[85%] bg-gray-900 border border-gray-700">
+        <ActionsheetContent className="max-h-[85%] bg-zinc-900 border border-zinc-700">
           <ActionsheetDragIndicatorWrapper>
-            <ActionsheetDragIndicator className="bg-gray-500" />
+            <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>
           {renderContent()}
         </ActionsheetContent>

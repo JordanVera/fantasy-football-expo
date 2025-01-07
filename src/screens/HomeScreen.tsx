@@ -3,7 +3,7 @@ import { api } from '../services/ApiService';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import MakePicksActionSheet from '@/src/components/actionsheets/MakePicksActionSheet';
-
+import UsersTable from '@/src/components/tables/UsersTable';
 export function HomeScreen() {
   const [testResult, setTestResult] = useState<string>('');
   const { user, logout } = useAuth();
@@ -20,6 +20,7 @@ export function HomeScreen() {
   return (
     <SafeAreaView className="items-center justify-center flex-1 w-full bg-gray-900">
       <MakePicksActionSheet />
+      <UsersTable />
       <Text className="mb-4 text-2xl text-white">
         Welcome, {user?.username || 'User'}!
       </Text>
