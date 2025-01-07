@@ -13,6 +13,7 @@ import {
   ToastTitle,
   useToast,
 } from '@/src/components/ui/toast';
+import * as Haptics from 'expo-haptics';
 
 import {
   Actionsheet,
@@ -64,7 +65,14 @@ export default function MakePicksActionSheet() {
     try {
       const response = await api.createPicks(picks, selectedWeek);
 
-      await refreshUser();
+      console.log({ response });
+
+      if (response.success) {
+        await refreshUser();
+        await Haptics.notificationAsync(
+          Haptics.NotificationFeedbackType.Success
+        );
+      }
 
       toast.show({
         placement: 'top',
@@ -85,6 +93,8 @@ export default function MakePicksActionSheet() {
       setPicks([]);
       setSelectedWeek(null);
     } catch (error) {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+
       // The error message will come from the API service
       const errorMessage =
         error instanceof Error ? error.message : 'Failed to submit picks';
