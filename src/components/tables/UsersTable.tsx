@@ -16,7 +16,7 @@ export default function UsersTable() {
 
   // Create table header
   const tableHead = [
-    'Name',
+    'Username',
     ...[...Array(Number(NUMBER_OF_WEEKS))].map((_, i) => `Week ${i + 1}`),
   ];
 
@@ -41,10 +41,6 @@ export default function UsersTable() {
       });
     }) || [];
 
-  // Get screen height for dynamic sizing
-  const screenHeight = Dimensions.get('window').height;
-  const tableHeight = screenHeight * 0.6; // Takes up 60% of screen height, adjust as needed
-
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
@@ -67,7 +63,12 @@ export default function UsersTable() {
             <Rows
               data={tableData}
               style={{ backgroundColor: '#111827' }}
-              textStyle={{ color: 'white', fontSize: 14, textAlign: 'center' }}
+              textStyle={{
+                color: 'white',
+                fontSize: 14,
+                textAlign: 'center',
+                padding: 10,
+              }}
               widthArr={[
                 192,
                 ...[...Array(Number(NUMBER_OF_WEEKS))].map(() => 96),
