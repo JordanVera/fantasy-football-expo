@@ -25,7 +25,7 @@ export function HomeScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 w-full bg-gray-900">
+    <SafeAreaView className="flex-1 w-full bg-black">
       <ScrollView className="flex-1 w-full px-4">
         <View className="items-center justify-center w-full gap-3">
           <Text className="text-2xl text-white ">

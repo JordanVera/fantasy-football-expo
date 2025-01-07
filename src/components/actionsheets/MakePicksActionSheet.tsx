@@ -27,6 +27,7 @@ import {
 
 export default function MakePicksActionSheet() {
   const toast = useToast();
+  const { user, refreshUser } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'week' | 'picks'>('week');
@@ -35,7 +36,6 @@ export default function MakePicksActionSheet() {
     []
   );
 
-  const { user } = useAuth();
   const availableWeeks = getAvailableWeeks();
 
   const handleWeekSelect = (week: number) => {
@@ -63,6 +63,8 @@ export default function MakePicksActionSheet() {
 
     try {
       const response = await api.createPicks(picks, selectedWeek);
+
+      await refreshUser();
 
       toast.show({
         placement: 'top',
@@ -99,6 +101,17 @@ export default function MakePicksActionSheet() {
         },
       });
     }
+  };
+
+  const isTeamPickedForEntry = (team: string, entryIndex: number) => {
+    if (!user?.Picks) return false;
+
+    return user.Picks.some(
+      (pick) =>
+        pick.team === team &&
+        pick.entryNumber === entryIndex &&
+        pick.week !== selectedWeek // Only check other weeks
+    );
   };
 
   const renderContent = () => {
@@ -148,20 +161,36 @@ export default function MakePicksActionSheet() {
               <View key={index} className="space-y-2">
                 <Text className="mb-3 text-white">Entry {index + 1}</Text>
                 <View className="flex-row flex-wrap gap-2">
-                  {TEAMS.map((team) => (
-                    <Button
-                      key={team}
-                      variant={'solid'}
-                      onPress={() => handlePickChange(team, index)}
-                      className={`flex-grow basis-[30%] ${
-                        picks.find((p) => p.entry === index && p.pick === team)
-                          ? 'bg-green-500'
-                          : 'bg-zinc-800'
-                      }`}
-                    >
-                      <ButtonText className="text-white">{team}</ButtonText>
-                    </Button>
-                  ))}
+                  {TEAMS.map((team) => {
+                    const isDisabled = isTeamPickedForEntry(team, index);
+                    const isSelected = picks.find(
+                      (p) => p.entry === index && p.pick === team
+                    );
+
+                    return (
+                      <Button
+                        key={team}
+                        variant={'solid'}
+                        onPress={() => handlePickChange(team, index)}
+                        disabled={isDisabled}
+                        className={`flex-grow basis-[30%] ${
+                          isSelected
+                            ? 'bg-green-500'
+                            : isDisabled
+                            ? 'bg-zinc-600 opacity-50' // Greyed out style
+                            : 'bg-zinc-700'
+                        }`}
+                      >
+                        <ButtonText
+                          className={`text-white ${
+                            isDisabled ? 'opacity-50' : ''
+                          }`}
+                        >
+                          {team}
+                        </ButtonText>
+                      </Button>
+                    );
+                  })}
                 </View>
               </View>
             ))}
@@ -183,7 +212,7 @@ export default function MakePicksActionSheet() {
 
       <Actionsheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ActionsheetBackdrop />
-        <ActionsheetContent className="max-h-[85%] bg-zinc-900 border border-zinc-700">
+        <ActionsheetContent className="max-h-[85%] bg-zinc-800 border-0">
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>

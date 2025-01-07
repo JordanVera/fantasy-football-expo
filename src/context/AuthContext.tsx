@@ -16,6 +16,7 @@ type AuthContextType = {
   }) => Promise<void>;
   logout: () => Promise<void>;
   isLoading: boolean;
+  refreshUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,6 +24,31 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const fetchUserData = async (userId: string) => {
+    try {
+      const userData = await api.getUser(userId);
+      setUser(userData);
+      await AsyncStorage.setItem('user', JSON.stringify(userData));
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const loadStoredUser = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        await fetchUserData(parsedUser.id);
+      }
+    } catch (error) {
+      console.error('Error loading stored user:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     loadStoredUser();
@@ -33,25 +59,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log(user);
   }, [user]);
 
-  const loadStoredUser = async () => {
-    try {
-      const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      }
-    } catch (error) {
-      console.error('Error loading stored user:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const login = async (email: string, password: string) => {
     try {
       const { user, token } = await api.login(email, password);
-      await AsyncStorage.setItem('user', JSON.stringify(user));
       await AsyncStorage.setItem('token', token);
-      setUser(user);
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      await fetchUserData(user.id);
     } catch (error) {
       throw error;
     }
@@ -67,9 +80,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }) => {
     try {
       const { user, token } = await api.signup(params);
-      await AsyncStorage.setItem('user', JSON.stringify(user));
       await AsyncStorage.setItem('token', token);
-      setUser(user);
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      await fetchUserData(user.id);
     } catch (error) {
       throw error;
     }
@@ -85,8 +98,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const refreshUser = async () => {
+    if (user?.id) {
+      await fetchUserData(user.id);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        signup,
+        logout,
+        isLoading,
+        refreshUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
