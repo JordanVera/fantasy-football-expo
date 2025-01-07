@@ -7,6 +7,12 @@ import { getAvailableWeeks } from '@/src/utils/dates';
 import { useAuth } from '@/src/context/AuthContext';
 import { api } from '@/src/services/ApiService';
 import TEAMS from '@/src/types/TEAMS';
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
+} from '@/src/components/ui/toast';
 
 import {
   Actionsheet,
@@ -20,6 +26,8 @@ import {
 } from '@/src/components/ui/actionsheet';
 
 export default function MakePicksActionSheet() {
+  const toast = useToast();
+
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'week' | 'picks'>('week');
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
@@ -55,15 +63,41 @@ export default function MakePicksActionSheet() {
 
     try {
       const response = await api.createPicks(picks, selectedWeek);
-      console.log('Picks submitted successfully:', response);
+
+      toast.show({
+        placement: 'top',
+        render: ({ id }) => {
+          return (
+            <Toast nativeID={`toast-${id}`} action="success" variant="solid">
+              <ToastTitle>Success!</ToastTitle>
+              <ToastDescription>
+                Successfully submitted picks for week {selectedWeek}
+              </ToastDescription>
+            </Toast>
+          );
+        },
+      });
+
       setIsOpen(false);
       setStep('week');
       setPicks([]);
       setSelectedWeek(null);
-      // TODO: Add success toast
     } catch (error) {
-      console.error('Failed to submit picks:', error);
-      // TODO: Add error toast
+      // The error message will come from the API service
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to submit picks';
+
+      toast.show({
+        placement: 'top',
+        render: ({ id }) => {
+          return (
+            <Toast nativeID={`toast-${id}`} action="error" variant="solid">
+              <ToastTitle>Error</ToastTitle>
+              <ToastDescription>{errorMessage}</ToastDescription>
+            </Toast>
+          );
+        },
+      });
     }
   };
 
