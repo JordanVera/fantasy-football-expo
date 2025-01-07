@@ -1,6 +1,6 @@
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, Text, View, Dimensions } from 'react-native';
+import { Table, Row, Rows } from 'react-native-reanimated-table';
 import { useUsers } from '@/src/hooks/useUsers';
-import { Box } from '@/src/components/ui/box';
 import type Pick from '@/src/types/Pick';
 import { NUMBER_OF_WEEKS } from '@env';
 
@@ -12,84 +12,70 @@ interface GroupedPicks {
 }
 
 export default function UsersTable() {
-  const { users } = useUsers(); // TODO: add loading state
+  const { users } = useUsers();
 
-  // if (loading) {
-  //   return (
-  //     <View className="items-center justify-center flex-1">
-  //       <Text className="text-white">Loading...</Text>
-  //     </View>
-  //   );
-  // }
+  // Create table header
+  const tableHead = [
+    'Name',
+    ...[...Array(Number(NUMBER_OF_WEEKS))].map((_, i) => `Week ${i + 1}`),
+  ];
+
+  // Create table data
+  const tableData =
+    users?.flatMap((user) => {
+      const groupedPicks = user.Picks.reduce<GroupedPicks>((grouped, pick) => {
+        if (!grouped[pick.entryNumber]) {
+          grouped[pick.entryNumber] = {};
+        }
+        grouped[pick.entryNumber][pick.week] = pick;
+        return grouped;
+      }, {});
+
+      return [...Array(user.bullets || 0)].map((_, index) => {
+        const userName = `${user.username} (${index + 1})`;
+        const weekPicks = [...Array(Number(NUMBER_OF_WEEKS))].map(
+          (_, weekIndex) => groupedPicks[index]?.[weekIndex + 1]?.team || ''
+        );
+
+        return [userName, ...weekPicks];
+      });
+    }) || [];
+
+  // Get screen height for dynamic sizing
+  const screenHeight = Dimensions.get('window').height;
+  const tableHeight = screenHeight * 0.6; // Takes up 60% of screen height, adjust as needed
 
   return (
-    <ScrollView horizontal className="flex-1">
-      <View className="min-w-full border border-gray-700 rounded-xl">
-        <View className="flex-row bg-gray-900">
-          <View className="w-48 px-6 py-3">
-            <Text className="text-xs font-medium text-white">Name</Text>
-          </View>
-          {[...Array(Number(NUMBER_OF_WEEKS))].map((_, index) => (
-            <View key={index} className="w-24 px-2 py-3">
-              <Text className="text-xs font-medium text-center text-white">
-                Week {index + 1}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        <View className="divide-y divide-gray-700">
-          {users?.map((user) => {
-            const groupedPicks = user.Picks.reduce<GroupedPicks>(
-              (grouped, pick) => {
-                if (!grouped[pick.entryNumber]) {
-                  grouped[pick.entryNumber] = {};
-                }
-                grouped[pick.entryNumber][pick.week] = pick;
-                return grouped;
-              },
-              {}
-            );
-
-            return [...Array(user.bullets || 0)].map((_, index) => (
-              <View
-                key={`${user.id}-${index}`}
-                className="flex-row bg-gray-900 border-b border-gray-700"
-              >
-                <View className="w-48 px-6 py-4">
-                  <View className="flex-row items-center gap-3">
-                    <View className="items-center justify-center w-8 h-8 bg-gray-700 rounded-full">
-                      <Text className="text-xs text-white uppercase">
-                        {user.firstname?.[0]}
-                        {user.lastname?.[0]}
-                      </Text>
-                    </View>
-                    <View className="flex-1">
-                      <Text className="text-sm font-medium text-white">
-                        {user.username} ({index + 1})
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                {[...Array(Number(NUMBER_OF_WEEKS))].map((_, weekIndex) => {
-                  const pick = groupedPicks[index]?.[weekIndex + 1]?.team || '';
-                  return (
-                    <View
-                      key={`${user.id}-${index}-${weekIndex}`}
-                      className="w-24 px-2 py-4"
-                    >
-                      <Text className="text-sm font-medium text-center text-white">
-                        {pick}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </View>
-            ));
-          })}
-        </View>
-      </View>
-    </ScrollView>
+    <View className="w-full">
+      <ScrollView horizontal className="w-full">
+        <ScrollView>
+          <Table borderStyle={{ borderWidth: 1, borderColor: '#404040' }}>
+            <Row
+              data={tableHead}
+              style={{ backgroundColor: '#111827' }}
+              textStyle={{
+                color: 'white',
+                fontSize: 12,
+                fontWeight: '500',
+                textAlign: 'center',
+              }}
+              widthArr={[
+                192,
+                ...[...Array(Number(NUMBER_OF_WEEKS))].map(() => 96),
+              ]}
+            />
+            <Rows
+              data={tableData}
+              style={{ backgroundColor: '#111827' }}
+              textStyle={{ color: 'white', fontSize: 14, textAlign: 'center' }}
+              widthArr={[
+                192,
+                ...[...Array(Number(NUMBER_OF_WEEKS))].map(() => 96),
+              ]}
+            />
+          </Table>
+        </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

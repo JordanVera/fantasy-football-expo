@@ -41,6 +41,7 @@
     "react-native-css-interop": "^0.1.22",
     "react-native-dotenv": "^3.4.11",
     "react-native-reanimated": "^3.16.6",
+    "react-native-reanimated-table": "^0.0.2",
     "react-native-safe-area-context": "^5.0.0",
     "react-native-screens": "~4.4.0",
     "react-native-svg": "^15.2.0",

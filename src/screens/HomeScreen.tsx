@@ -1,9 +1,16 @@
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import { api } from '../services/ApiService';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import MakePicksActionSheet from '@/src/components/actionsheets/MakePicksActionSheet';
 import UsersTable from '@/src/components/tables/UsersTable';
+
 export function HomeScreen() {
   const [testResult, setTestResult] = useState<string>('');
   const { user, logout } = useAuth();
@@ -18,33 +25,26 @@ export function HomeScreen() {
   };
 
   return (
-    <SafeAreaView className="items-center justify-center flex-1 w-full bg-gray-900">
-      <MakePicksActionSheet />
-      <UsersTable />
-      <Text className="mb-4 text-2xl text-white">
-        Welcome, {user?.username || 'User'}!
-      </Text>
-      <Text className="mb-8 text-white">{user?.email}</Text>
+    <SafeAreaView className="flex-1 w-full bg-gray-900">
+      <ScrollView className="flex-1 w-full px-4">
+        <View className="items-center justify-center w-full gap-3">
+          <Text className="text-2xl text-white ">
+            Welcome, {user?.username || 'User'}!
+          </Text>
 
-      <TouchableOpacity
-        onPress={handleTestPress}
-        className="px-6 py-3 mb-4 bg-blue-500 rounded-lg"
-      >
-        <Text className="font-semibold text-white">Test API</Text>
-      </TouchableOpacity>
+          <View className="flex-row justify-center w-full gap-5">
+            <MakePicksActionSheet />
+            <TouchableOpacity
+              onPress={logout}
+              className="px-6 py-3 bg-red-500 rounded-lg"
+            >
+              <Text className="font-semibold text-white">Logout</Text>
+            </TouchableOpacity>
+          </View>
 
-      <TouchableOpacity
-        onPress={logout}
-        className="px-6 py-3 bg-red-500 rounded-lg"
-      >
-        <Text className="font-semibold text-white">Logout</Text>
-      </TouchableOpacity>
-
-      {testResult ? (
-        <Text className="p-4 mt-4 text-white bg-gray-800 rounded">
-          {testResult}
-        </Text>
-      ) : null}
+          <UsersTable />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
