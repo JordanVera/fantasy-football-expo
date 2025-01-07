@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, Switch } from 'react-native';
+import { SafeAreaView, View, Text, Switch } from 'react-native';
 
 export function SettingsScreen() {
   return (
-    <View className="flex-1 p-4 bg-white dark:bg-gray-900">
-      <View className="flex-row items-center justify-between py-3 border-b border-gray-300">
-        <Text className="text-base text-black dark:text-white">Dark Mode</Text>
+    <SafeAreaView className="flex-1 bg-gray-900">
+      <View className="flex-row items-center justify-between py-3 border border-gray-300">
+        <Text className="text-base text-white">Dark Mode</Text>
         {/* <Switch
           value={theme === 'dark'}
           onValueChange={toggleTheme}
@@ -13,6 +13,6 @@ export function SettingsScreen() {
           thumbColor={theme === 'dark' ? '#f5dd4b' : '#f4f3f4'}
         /> */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
