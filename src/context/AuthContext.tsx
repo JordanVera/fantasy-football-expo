@@ -2,9 +2,9 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../services/ApiService';
 import User from '../types/User';
-
+import UserWithPicks from '../types/UserWithPicks';
 type AuthContextType = {
-  user: User | null;
+  user: UserWithPicks | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (params: {
     email: string;
