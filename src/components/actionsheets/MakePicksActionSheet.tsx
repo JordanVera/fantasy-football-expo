@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { Button, ButtonText } from '@/src/components/ui/button';
 import { Icon } from '@/src/components/ui/icon';
-import { ChevronRightIcon, ChevronLeftIcon } from 'lucide-react-native';
+import {
+  ChevronRightIcon,
+  ChevronLeftIcon,
+  ClipboardCheckIcon,
+} from 'lucide-react-native';
 import { getAvailableWeeks } from '@/src/utils/dates';
 import { useAuth } from '@/src/context/AuthContext';
 import { api } from '@/src/services/ApiService';
@@ -44,7 +48,7 @@ export default function MakePicksActionSheet() {
   const availableWeeks = getAvailableWeeks();
 
   const handleWeekSelect = (week: number) => {
-    setSelectedWeek(week);
+    setSelectedWeek(week - 1);
     setStep('picks');
   };
 
@@ -64,18 +68,14 @@ export default function MakePicksActionSheet() {
   };
 
   const handleSubmit = async () => {
-    if (!selectedWeek) return;
+    if (selectedWeek === null) return;
 
     try {
       const response = await api.createPicks(picks, selectedWeek);
 
-      console.log({ response });
-
       if (response.success) {
         await refreshUser();
-        const users = await fetchUsers();
-        console.log('users FROM FEEEEE');
-        console.log(users);
+        await fetchUsers();
         await Haptics.notificationAsync(
           Haptics.NotificationFeedbackType.Success
         );
@@ -87,7 +87,7 @@ export default function MakePicksActionSheet() {
               <Toast nativeID={`toast-${id}`} action="success" variant="solid">
                 <ToastTitle>Success!</ToastTitle>
                 <ToastDescription>
-                  Successfully submitted picks for week {selectedWeek}
+                  Successfully submitted picks for week {selectedWeek + 1}
                 </ToastDescription>
               </Toast>
             );
@@ -127,7 +127,7 @@ export default function MakePicksActionSheet() {
       (pick) =>
         pick.team === team &&
         pick.entryNumber === entryIndex &&
-        pick.week !== selectedWeek // Only check other weeks
+        pick.week !== selectedWeek // selectedWeek is already 0-based
     );
   };
 
@@ -159,16 +159,12 @@ export default function MakePicksActionSheet() {
     return (
       <>
         <View className="flex-row items-center justify-between w-full py-2">
-          <Button
-            // variant="ghost"
-            onPress={() => setStep('week')}
-            className="p-2"
-          >
+          <Button onPress={() => setStep('week')} className="p-2">
             <Icon as={ChevronLeftIcon} className="text-gray-400" />
             <ButtonText>Back</ButtonText>
           </Button>
           <Text className="text-lg font-semibold text-white">
-            Week {selectedWeek} Picks
+            Week {selectedWeek !== null ? selectedWeek + 1 : ''} Picks
           </Text>
         </View>
 
@@ -225,8 +221,9 @@ export default function MakePicksActionSheet() {
 
   return (
     <>
-      <Button onPress={() => setIsOpen(true)} className="bg-blue-600">
+      <Button onPress={() => setIsOpen(true)} className="bg-green-500">
         <ButtonText>Make Picks</ButtonText>
+        <Icon as={ClipboardCheckIcon} className="text-white" size={'md'} />
       </Button>
 
       <Actionsheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
