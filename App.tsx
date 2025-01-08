@@ -4,6 +4,7 @@ import { GluestackUIProvider } from './src/components/ui/gluestack-ui-provider';
 import { BottomTabNavigator } from './src/navigation/BottomTabNavigator';
 import { AuthNavigator } from './src/navigation/AuthNavigator';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { UsersProvider } from './src/context/UserContext';
 import 'nativewind';
 
 import './global.css';
@@ -21,11 +22,13 @@ function Navigation() {
 export default function App() {
   return (
     <AuthProvider>
-      <GluestackUIProvider mode="light">
-        <NavigationContainer>
-          <Navigation />
-        </NavigationContainer>
-      </GluestackUIProvider>
+      <UsersProvider>
+        <GluestackUIProvider mode="light">
+          <NavigationContainer>
+            <Navigation />
+          </NavigationContainer>
+        </GluestackUIProvider>
+      </UsersProvider>
     </AuthProvider>
   );
 }

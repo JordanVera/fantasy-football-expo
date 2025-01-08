@@ -27,6 +27,8 @@ router.get('/all', authenticateToken, async (req, res) => {
       },
     });
 
+    // console.log({ users });
+
     return res.status(200).json(users);
   } catch (error) {
     console.error('Error fetching users:', error);

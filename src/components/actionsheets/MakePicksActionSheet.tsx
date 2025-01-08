@@ -8,7 +8,7 @@ import { useAuth } from '@/src/context/AuthContext';
 import { api } from '@/src/services/ApiService';
 import * as Haptics from 'expo-haptics';
 import TEAMS from '@/src/types/TEAMS';
-import { useUsers } from '@/src/hooks/useUsers';
+import { useUsers } from '@/src/context/UserContext';
 import {
   Toast,
   ToastDescription,
@@ -71,8 +71,10 @@ export default function MakePicksActionSheet() {
       console.log({ response });
 
       if (response.success) {
-        // await refreshUser();
-        await fetchUsers();
+        await refreshUser();
+        const users = await fetchUsers();
+        console.log('users FROM FEEEEE');
+        console.log(users);
         await Haptics.notificationAsync(
           Haptics.NotificationFeedbackType.Success
         );

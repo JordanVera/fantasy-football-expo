@@ -1,6 +1,6 @@
 import { ScrollView, Text, View, Dimensions } from 'react-native';
 import { Table, Row, Rows } from 'react-native-reanimated-table';
-import { useUsers } from '@/src/hooks/useUsers';
+import { useUsers } from '@/src/context/UserContext';
 import type Pick from '@/src/types/Pick';
 import { NUMBER_OF_WEEKS } from '@env';
 
