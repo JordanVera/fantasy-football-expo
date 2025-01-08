@@ -54,10 +54,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadStoredUser();
   }, []);
 
-  useEffect(() => {
-    console.log('_____user_____');
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log('_____user_____');
+  //   console.log(user);
+  // }, [user]);
 
   const login = async (email: string, password: string) => {
     try {

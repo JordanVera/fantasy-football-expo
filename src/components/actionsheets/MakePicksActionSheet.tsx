@@ -6,14 +6,15 @@ import { ChevronRightIcon, ChevronLeftIcon } from 'lucide-react-native';
 import { getAvailableWeeks } from '@/src/utils/dates';
 import { useAuth } from '@/src/context/AuthContext';
 import { api } from '@/src/services/ApiService';
+import * as Haptics from 'expo-haptics';
 import TEAMS from '@/src/types/TEAMS';
+import { useUsers } from '@/src/hooks/useUsers';
 import {
   Toast,
   ToastDescription,
   ToastTitle,
   useToast,
 } from '@/src/components/ui/toast';
-import * as Haptics from 'expo-haptics';
 
 import {
   Actionsheet,
@@ -29,6 +30,8 @@ import {
 export default function MakePicksActionSheet() {
   const toast = useToast();
   const { user, refreshUser } = useAuth();
+
+  const { fetchUsers } = useUsers();
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'week' | 'picks'>('week');
@@ -68,30 +71,31 @@ export default function MakePicksActionSheet() {
       console.log({ response });
 
       if (response.success) {
-        await refreshUser();
+        // await refreshUser();
+        await fetchUsers();
         await Haptics.notificationAsync(
           Haptics.NotificationFeedbackType.Success
         );
+
+        toast.show({
+          placement: 'top',
+          render: ({ id }) => {
+            return (
+              <Toast nativeID={`toast-${id}`} action="success" variant="solid">
+                <ToastTitle>Success!</ToastTitle>
+                <ToastDescription>
+                  Successfully submitted picks for week {selectedWeek}
+                </ToastDescription>
+              </Toast>
+            );
+          },
+        });
+
+        setIsOpen(false);
+        setStep('week');
+        setPicks([]);
+        setSelectedWeek(null);
       }
-
-      toast.show({
-        placement: 'top',
-        render: ({ id }) => {
-          return (
-            <Toast nativeID={`toast-${id}`} action="success" variant="solid">
-              <ToastTitle>Success!</ToastTitle>
-              <ToastDescription>
-                Successfully submitted picks for week {selectedWeek}
-              </ToastDescription>
-            </Toast>
-          );
-        },
-      });
-
-      setIsOpen(false);
-      setStep('week');
-      setPicks([]);
-      setSelectedWeek(null);
     } catch (error) {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
 
@@ -169,7 +173,9 @@ export default function MakePicksActionSheet() {
           <View className="flex gap-10 space-y-4">
             {[...Array(user?.bullets || 0)].map((_, index) => (
               <View key={index} className="space-y-2">
-                <Text className="mb-3 text-white">Entry {index + 1}</Text>
+                <Text className="mb-3 font-semibold text-white">
+                  Entry {index + 1}
+                </Text>
                 <View className="flex-row flex-wrap gap-2">
                   {TEAMS.map((team) => {
                     const isDisabled = isTeamPickedForEntry(team, index);
@@ -183,7 +189,7 @@ export default function MakePicksActionSheet() {
                         variant={'solid'}
                         onPress={() => handlePickChange(team, index)}
                         disabled={isDisabled}
-                        className={`flex-grow basis-[30%] ${
+                        className={`flex-grow basis-[23%] ${
                           isSelected
                             ? 'bg-green-500'
                             : isDisabled

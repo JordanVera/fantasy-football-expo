@@ -12,7 +12,7 @@ interface GroupedPicks {
 }
 
 export default function UsersTable() {
-  const { users } = useUsers();
+  const { users, loadingUsers } = useUsers();
 
   // Create table header
   const tableHead = [
@@ -40,6 +40,10 @@ export default function UsersTable() {
         return [userName, ...weekPicks];
       });
     }) || [];
+
+  if (loadingUsers) {
+    return <Text className="text-white">Loading...</Text>;
+  }
 
   return (
     <View className="w-full">

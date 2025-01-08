@@ -28,6 +28,6 @@ export function useUsers() {
     users,
     loadingUsers,
     error,
-    refetch: fetchUsers,
+    fetchUsers,
   };
 }
