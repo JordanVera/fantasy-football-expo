@@ -3,6 +3,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
 import { useState, useEffect } from 'react';
 import { api } from '../services/ApiService';
 import type UserWithPicks from '../types/UserWithPicks';
+import type Loser from '../types/Loser';
 
 // Define the context type
 type UsersContextType = {
@@ -10,6 +11,9 @@ type UsersContextType = {
   loadingUsers: boolean;
   error: string | null;
   fetchUsers: () => Promise<void>;
+  losers: Loser[];
+  loadingLosers: boolean;
+  fetchLosers: () => Promise<void>;
 };
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
@@ -18,7 +22,11 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [users, setUsers] = useState<UserWithPicks[]>([]);
-  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
+
+  const [losers, setLosers] = useState<Loser[]>([]);
+  const [loadingLosers, setLoadingLosers] = useState<boolean>(false);
+
   const [error, setError] = useState<string | null>(null);
 
   const fetchUsers = async (): Promise<void> => {
@@ -36,12 +44,35 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const fetchLosers = async (): Promise<void> => {
+    try {
+      setLoadingLosers(true);
+      setError(null);
+      const data = await api.getLosers();
+      setLosers(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch losers');
+    } finally {
+      setLoadingLosers(false);
+    }
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
 
   return (
-    <UsersContext.Provider value={{ users, loadingUsers, error, fetchUsers }}>
+    <UsersContext.Provider
+      value={{
+        users,
+        loadingUsers,
+        error,
+        fetchUsers,
+        losers,
+        loadingLosers,
+        fetchLosers,
+      }}
+    >
       {children}
     </UsersContext.Provider>
   );

@@ -108,6 +108,23 @@ export class ApiService {
 
     return response.json();
   }
+
+  async getLosers() {
+    const response = await fetch(`${this.baseUrl}/losers`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch losers');
+    }
+
+    return response.json();
+  }
 }
 
 // Export a default instance
