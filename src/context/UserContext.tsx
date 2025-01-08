@@ -49,7 +49,12 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
       setLoadingLosers(true);
       setError(null);
       const data = await api.getLosers();
-      setLosers(data);
+
+      if (data.success) {
+        setLosers(data.losers);
+
+        console.log('losers', losers);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch losers');
     } finally {
@@ -59,6 +64,7 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     fetchUsers();
+    fetchLosers();
   }, []);
 
   return (
