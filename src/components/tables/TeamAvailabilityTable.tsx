@@ -60,14 +60,14 @@ export default function TeamAvailabilityTable() {
     });
   });
 
-  const cellStyle = 'w-16 min-w-[64px] px-2 py-2 text-center border-gray-700';
+  const cellStyle = 'w-16 px-2 py-2 text-center border-gray-700';
 
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
-        <Table className="w-full border border-gray-700">
+        <Table className="w-full border border-gray-700 rounded-lg">
           <TableHeader>
-            <TableRow className="bg-gray-900 border-b border-gray-700">
+            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
               {TEAMS.map((team, index) => (
                 <TableHead
                   key={index}
@@ -81,7 +81,7 @@ export default function TeamAvailabilityTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className="bg-gray-900">
+            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-b-lg">
               {TEAMS.map((team, index) => (
                 <TableData
                   key={index}
@@ -89,7 +89,7 @@ export default function TeamAvailabilityTable() {
                     index !== TEAMS.length - 1 ? 'border-r' : ''
                   }`}
                 >
-                  <View className="flex-col items-center">
+                  <View className="flex-col items-center w-full">
                     <Text className="text-white">{teamCounts[team]}</Text>
                     <Text className="text-xs text-gray-500">
                       {numberOfTotalActiveEntries
