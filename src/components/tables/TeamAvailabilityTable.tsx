@@ -9,16 +9,21 @@ import {
   TableRow,
 } from '@/src/components/ui/table';
 import { useUsers } from '@/src/context/UserContext';
-import TEAMS from '@/src/types/TEAMS';
+import TEAMS, { NFLTeam } from '@/src/types/TEAMS';
+
+// Define interface for team counts
+interface TeamCounts {
+  [key: string]: number;
+}
 
 export default function TeamAvailabilityTable() {
   const { users, losers } = useUsers();
 
   // Calculate team availability counts
-  const teamCounts = TEAMS.reduce((counts, team) => {
+  const teamCounts: TeamCounts = TEAMS.reduce((counts, team) => {
     counts[team] = 0;
     return counts;
-  }, {});
+  }, {} as TeamCounts);
 
   // Track total active entries
   let numberOfTotalActiveEntries = 0;
@@ -29,7 +34,7 @@ export default function TeamAvailabilityTable() {
     const groupedPicks = user.Picks?.reduce((grouped, pick) => {
       (grouped[pick.entryNumber] = grouped[pick.entryNumber] || []).push(pick);
       return grouped;
-    }, {});
+    }, {} as { [key: number]: typeof user.Picks });
 
     // For each entry the user has
     [...Array(user.bullets || 0)].forEach((_, entryIndex) => {
@@ -55,14 +60,14 @@ export default function TeamAvailabilityTable() {
     });
   });
 
-  const cellStyle = 'w-20  px-2 py-2 text-center border-gray-700';
+  const cellStyle = 'w-16 min-w-[64px] px-2 py-2 text-center border-gray-700';
 
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
-        <Table className="w-full border border-gray-700 rounded-lg">
+        <Table className="w-full border border-gray-700">
           <TableHeader>
-            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
+            <TableRow className="bg-gray-900 border-b border-gray-700">
               {TEAMS.map((team, index) => (
                 <TableHead
                   key={index}
@@ -76,15 +81,15 @@ export default function TeamAvailabilityTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className="bg-gray-900 border-gray-700 rounded-b-lg">
+            <TableRow className="bg-gray-900">
               {TEAMS.map((team, index) => (
                 <TableData
                   key={index}
-                  className={`${cellStyle}   ${
+                  className={`${cellStyle}  ${
                     index !== TEAMS.length - 1 ? 'border-r' : ''
                   }`}
                 >
-                  <View className="flex-col items-center w-full">
+                  <View className="flex-col items-center">
                     <Text className="text-white">{teamCounts[team]}</Text>
                     <Text className="text-xs text-gray-500">
                       {numberOfTotalActiveEntries
