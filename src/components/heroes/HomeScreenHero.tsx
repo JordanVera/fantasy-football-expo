@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, Text } from 'react-native';
 import { useUsers } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
@@ -10,42 +11,59 @@ export function HomeScreenHero() {
   const { user } = useAuth();
 
   const totalUserBullets = users?.reduce(
-    (total: number, user: User) => total + user?.bullets,
+    (total: number, user: User) => total + (user?.bullets ?? 0),
     0
   );
 
   const totalActiveUsers = users?.reduce((total: number, user: User) => {
-    if (user?.bullets) {
+    if (user?.bullets && user.bullets > 0) {
       return total + 1;
     }
     return total;
   }, 0);
 
   const VIG = 10;
+  const currentWeek = getStartingWeek() + 1;
 
   return (
-    <View className="flex w-full gap-5 p-5 bg-gray-900 border border-gray-700 rounded-lg">
-      <Text className="text-2xl text-left text-white">
+    <View className="w-full gap-4 p-5 bg-gray-900 border border-gray-700 rounded-lg">
+      <Text className="mb-2 text-2xl font-bold text-white">
         Welcome, {user?.username || 'User'}!
       </Text>
-      <Text className="w-full text-lg font-bold text-white">
-        There is a total of {totalActiveUsers} users with {totalUserBullets}{' '}
-        entries which makes the prize pool $
-        {totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
+
+      <Text className="text-base text-gray-300">
+        <Text className="font-bold text-emerald-500">{totalActiveUsers}</Text>{' '}
+        Active Users
       </Text>
 
-      <Text className="text-sm text-orange-700">
-        ***
-        <Text className="font-bold">
-          It is currently week {getStartingWeek() + 1}.
-        </Text>{' '}
-        Please note you must make your picks on Thursday before 6pm CST (7pm
-        EST) for week {getStartingWeek() + 1}.{' '}
-        <Text className="font-bold">
-          Even if you are not picking the thursday game
-        </Text>
-        .***
+      <Text className="text-base text-gray-300">
+        <Text className="font-bold text-emerald-500">{totalUserBullets}</Text>{' '}
+        Total Entries
       </Text>
+
+      <Text className="text-base text-gray-300">
+        <Text className="font-bold text-emerald-500">
+          ${totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
+        </Text>{' '}
+        Prize Pool
+      </Text>
+
+      <Text className="mt-2 text-base text-left text-white">
+        Please make sure to read the rules!
+      </Text>
+
+      <View className="p-3 mt-2 bg-orange-900 rounded">
+        <Text className="text-sm text-orange-200">
+          It is currently week <Text className="font-bold">{currentWeek}</Text>.
+          Please note you must make your picks on Thursday before 6pm CST (7pm
+          EST) for week {currentWeek}.
+          <Text className="font-bold">
+            {' '}
+            Even if you are not picking the Thursday game
+          </Text>
+          .
+        </Text>
+      </View>
     </View>
   );
 }
