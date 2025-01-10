@@ -52,8 +52,8 @@ export function HomeScreenHero() {
         Please make sure to read the rules!
       </Text>
 
-      <View className="p-3 mt-2 bg-orange-900 rounded">
-        <Text className="text-sm text-orange-200">
+      <View className="p-3 mt-2 bg-red-900 rounded">
+        <Text className="text-sm text-red-200">
           It is currently week <Text className="font-bold">{currentWeek}</Text>.
           Please note you must make your picks on Thursday before 6pm CST (7pm
           EST) for week {currentWeek}.
