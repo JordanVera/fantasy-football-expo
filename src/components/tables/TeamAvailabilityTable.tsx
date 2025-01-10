@@ -55,7 +55,7 @@ export default function TeamAvailabilityTable() {
     });
   });
 
-  const cellStyle = 'w-16 min-w-[64px] px-2 py-2 text-center border-gray-700';
+  const cellStyle = 'w-20  px-2 py-2 text-center border-gray-700';
 
   return (
     <View className="w-full">
