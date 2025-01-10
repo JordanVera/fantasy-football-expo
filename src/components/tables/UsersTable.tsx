@@ -21,7 +21,7 @@ interface GroupedPicks {
 }
 
 export default function NewTable() {
-  const { users, loadingUsers, losers, hasLosingPick } = useUsers();
+  const { users, loadingUsers, losers } = useUsers();
 
   // Keep the display 1-based for users
   const tableHead = [
@@ -116,7 +116,7 @@ export default function NewTable() {
       <ScrollView horizontal className="w-full">
         <Table className="w-full border border-gray-700 rounded-lg">
           <TableHeader>
-            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
+            <TableRow className="bg-black border-b border-gray-700 rounded-t-lg">
               {tableHead.map((header, index) => (
                 <TableHead
                   key={`header-${index}`}
@@ -133,7 +133,7 @@ export default function NewTable() {
             {tableData.map((rowData, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className="bg-gray-900 border-b border-gray-700"
+                className="bg-black border-b border-gray-700"
               >
                 {rowData.map((cellData, cellIndex) => (
                   <TableData

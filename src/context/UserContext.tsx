@@ -15,7 +15,6 @@ type UsersContextType = {
   losers: Loser[];
   loadingLosers: boolean;
   fetchLosers: () => Promise<void>;
-  hasLosingPick: (entryNumber: number) => boolean;
 };
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
@@ -65,22 +64,6 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const hasLosingPick = (entryNumber: number) => {
-    if (!user?.Picks || !losers) return false;
-
-    // Get all picks for this entry number
-    const entryPicks = user.Picks.filter(
-      (pick) => pick.entryNumber === entryNumber
-    );
-
-    // Check if any of the picks for this entry match a loser
-    return entryPicks.some((pick) =>
-      losers.some(
-        (loser) => loser.team === pick.team && loser.week === pick.week
-      )
-    );
-  };
-
   useEffect(() => {
     fetchUsers();
     fetchLosers();
@@ -96,7 +79,6 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
         losers,
         loadingLosers,
         fetchLosers,
-        hasLosingPick,
       }}
     >
       {children}

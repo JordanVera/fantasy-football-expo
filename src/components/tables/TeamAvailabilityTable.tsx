@@ -67,7 +67,7 @@ export default function TeamAvailabilityTable() {
       <ScrollView horizontal className="w-full">
         <Table className="w-full border border-gray-700 rounded-lg">
           <TableHeader>
-            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
+            <TableRow className="bg-black border-b border-gray-700 rounded-t-lg">
               {TEAMS.map((team, index) => (
                 <TableHead
                   key={index}
@@ -81,7 +81,7 @@ export default function TeamAvailabilityTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-b-lg">
+            <TableRow className="bg-black border-b border-gray-700 rounded-b-lg">
               {TEAMS.map((team, index) => (
                 <TableData
                   key={index}

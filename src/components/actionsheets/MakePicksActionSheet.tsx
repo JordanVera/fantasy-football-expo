@@ -36,7 +36,7 @@ export default function MakePicksActionSheet() {
   const toast = useToast();
   const { user, refreshUser } = useAuth();
 
-  const { fetchUsers, hasLosingPick } = useUsers();
+  const { fetchUsers, losers } = useUsers();
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'week' | 'picks'>('week');
@@ -128,6 +128,22 @@ export default function MakePicksActionSheet() {
         pick.team === team &&
         pick.entryNumber === entryIndex &&
         pick.week !== selectedWeek // selectedWeek is already 0-based
+    );
+  };
+
+  const hasLosingPick = (entryNumber: number) => {
+    if (!user?.Picks || !losers) return false;
+
+    // Get all picks for this entry number
+    const entryPicks = user.Picks.filter(
+      (pick) => pick.entryNumber === entryNumber
+    );
+
+    // Check if any of the picks for this entry match a loser
+    return entryPicks.some((pick) =>
+      losers.some(
+        (loser) => loser.team === pick.team && loser.week === pick.week
+      )
     );
   };
 

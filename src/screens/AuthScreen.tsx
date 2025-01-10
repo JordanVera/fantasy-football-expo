@@ -26,6 +26,7 @@ export function AuthScreen() {
     try {
       if (!isLogin && password !== confirmPassword) {
         setError('Passwords do not match');
+        
         return;
       }
 

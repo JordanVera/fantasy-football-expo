@@ -26,29 +26,29 @@ export function HomeScreenHero() {
   const currentWeek = getStartingWeek() + 1;
 
   return (
-    <View className="w-full gap-4 p-5 bg-gray-900 border border-gray-700 rounded-lg">
-      <Text className="mb-2 text-2xl font-bold text-white">
+    <View className="w-full gap-4 p-5 bg-black border border-gray-700 rounded-lg">
+      <Text className="text-2xl font-bold text-white ">
         Welcome, {user?.username || 'User'}!
       </Text>
 
-      <Text className="text-base text-gray-300">
+      <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">{totalActiveUsers}</Text>{' '}
         Active Users
       </Text>
 
-      <Text className="text-base text-gray-300">
+      <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">{totalUserBullets}</Text>{' '}
         Total Entries
       </Text>
 
-      <Text className="text-base text-gray-300">
+      <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">
           ${totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
         </Text>{' '}
         Prize Pool
       </Text>
 
-      <Text className="mt-2 text-base text-left text-white">
+      <Text className="text-base text-left text-white ">
         Please make sure to read the rules!
       </Text>
 
