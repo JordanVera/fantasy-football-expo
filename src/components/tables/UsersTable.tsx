@@ -10,7 +10,7 @@ import {
 } from '@/src/components/ui/table';
 import { useUsers } from '@/src/context/UserContext';
 import { NUMBER_OF_WEEKS } from '@env';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import type Pick from '@/src/types/Pick';
 
 // Define interface for the grouped picks structure
@@ -85,45 +85,49 @@ export default function NewTable() {
   }
 
   return (
-    <ScrollView horizontal className="w-full">
-      <Table className="w-full border border-gray-700 rounded-lg">
-        <TableHeader>
-          <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
-            {tableHead.map((header, index) => (
-              <TableHead
-                key={`header-${index}`}
-                className={`text-white text-center font-medium p-2.5 ${
-                  index === 0 ? 'w-48' : 'w-24'
-                }`}
-              >
-                {header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tableData.map((rowData, rowIndex) => (
-            <TableRow
-              key={rowIndex}
-              className="bg-gray-900 border-b border-gray-700"
-            >
-              {rowData.map((cellData, cellIndex) => (
-                <TableData
-                  key={`${rowIndex}-${cellIndex}`}
-                  className={`${cellIndex === 0 ? 'w-48' : 'w-24'} text-center`}
-                  style={{
-                    color: rowStyles[rowIndex][cellIndex].color,
-                    fontSize: rowStyles[rowIndex][cellIndex].fontSize,
-                    padding: rowStyles[rowIndex][cellIndex].padding,
-                  }}
+    <View className="w-full">
+      <ScrollView horizontal className="w-full">
+        <Table className="w-full border border-gray-700 rounded-lg">
+          <TableHeader>
+            <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
+              {tableHead.map((header, index) => (
+                <TableHead
+                  key={`header-${index}`}
+                  className={`text-white text-center font-medium p-2.5 ${
+                    index === 0 ? 'w-48' : 'w-24'
+                  }`}
                 >
-                  {cellData}
-                </TableData>
+                  {header}
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </ScrollView>
+          </TableHeader>
+          <TableBody>
+            {tableData.map((rowData, rowIndex) => (
+              <TableRow
+                key={rowIndex}
+                className="bg-gray-900 border-b border-gray-700"
+              >
+                {rowData.map((cellData, cellIndex) => (
+                  <TableData
+                    key={`${rowIndex}-${cellIndex}`}
+                    className={`${
+                      cellIndex === 0 ? 'w-48' : 'w-24'
+                    } text-center`}
+                    style={{
+                      color: rowStyles[rowIndex][cellIndex].color,
+                      fontSize: rowStyles[rowIndex][cellIndex].fontSize,
+                      padding: rowStyles[rowIndex][cellIndex].padding,
+                    }}
+                  >
+                    {cellData}
+                  </TableData>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </ScrollView>
+    </View> 
   );
 }

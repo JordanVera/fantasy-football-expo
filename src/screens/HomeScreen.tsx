@@ -5,12 +5,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { api } from '../services/ApiService';
-import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import MakePicksActionSheet from '@/src/components/actionsheets/MakePicksActionSheet';
 import UsersTable from '@/src/components/tables/UsersTable';
 import TeamAvailabilityTable from '@/src/components/tables/TeamAvailabilityTable';
+import { HomeScreenHero } from '../components/heroes/HomeScreenHero';
 
 export function HomeScreen() {
   const { user, logout } = useAuth();
@@ -39,6 +38,7 @@ export function HomeScreen() {
             </TouchableOpacity>
           </View>
 
+          <HomeScreenHero />
           <TeamAvailabilityTable />
           <UsersTable />
         </View>
