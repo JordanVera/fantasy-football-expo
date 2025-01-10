@@ -27,6 +27,12 @@ export function HomeScreen() {
             <MakePicksActionSheet />
             <TouchableOpacity
               onPress={logout}
+              className="px-6 py-3 bg-purple-500 rounded-lg"
+            >
+              <Text className="font-semibold text-white">Sign up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={logout}
               className="px-6 py-3 bg-red-500 rounded-lg"
             >
               <Text className="font-semibold text-white">Logout</Text>

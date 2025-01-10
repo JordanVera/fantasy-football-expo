@@ -86,9 +86,9 @@ export default function NewTable() {
 
   return (
     <ScrollView horizontal className="w-full">
-      <Table className="w-full border border-gray-700">
+      <Table className="w-full border border-gray-700 rounded-lg">
         <TableHeader>
-          <TableRow className="bg-gray-900 border-b border-gray-700">
+          <TableRow className="bg-gray-900 border-b border-gray-700 rounded-t-lg">
             {tableHead.map((header, index) => (
               <TableHead
                 key={`header-${index}`}
