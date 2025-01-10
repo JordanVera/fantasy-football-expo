@@ -35,7 +35,7 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
       setError(null);
       const data = await api.getAllUsers();
 
-      console.log('data', data);
+      console.log('usersData', data);
       setUsers(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch users');
@@ -53,7 +53,7 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
       if (data.success) {
         setLosers(data.losers);
 
-        console.log('losers', losers);
+        // console.log('losers', losers);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch losers');

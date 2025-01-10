@@ -36,7 +36,7 @@ export default function MakePicksActionSheet() {
   const toast = useToast();
   const { user, refreshUser } = useAuth();
 
-  const { fetchUsers } = useUsers();
+  const { fetchUsers, losers } = useUsers();
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'week' | 'picks'>('week');
@@ -131,6 +131,22 @@ export default function MakePicksActionSheet() {
     );
   };
 
+  const hasLosingPick = (entryNumber: number) => {
+    if (!user?.Picks || !losers) return false;
+
+    // Get all picks for this entry number
+    const entryPicks = user.Picks.filter(
+      (pick) => pick.entryNumber === entryNumber
+    );
+
+    // Check if any of the picks for this entry match a loser
+    return entryPicks.some((pick) =>
+      losers.some(
+        (loser) => loser.team === pick.team && loser.week === pick.week
+      )
+    );
+  };
+
   const renderContent = () => {
     if (step === 'week') {
       return (
@@ -170,45 +186,51 @@ export default function MakePicksActionSheet() {
 
         <ActionsheetScrollView className="pt-5">
           <View className="flex gap-10 space-y-4">
-            {[...Array(user?.bullets || 0)].map((_, index) => (
-              <View key={index} className="space-y-2">
-                <Text className="mb-3 font-semibold text-white">
-                  Entry {index + 1}
-                </Text>
-                <View className="flex-row flex-wrap gap-2">
-                  {TEAMS.map((team) => {
-                    const isDisabled = isTeamPickedForEntry(team, index);
-                    const isSelected = picks.find(
-                      (p) => p.entry === index && p.pick === team
-                    );
+            {[...Array(user?.bullets || 0)].map((_, index) => {
+              // Skip rendering this entry if it has a losing pick
 
-                    return (
-                      <Button
-                        key={team}
-                        variant={'solid'}
-                        onPress={() => handlePickChange(team, index)}
-                        disabled={isDisabled}
-                        className={`flex-grow basis-[23%] ${
-                          isSelected
-                            ? 'bg-green-500'
-                            : isDisabled
-                            ? 'bg-zinc-600 opacity-50' // Greyed out style
-                            : 'bg-zinc-700'
-                        }`}
-                      >
-                        <ButtonText
-                          className={`text-white ${
-                            isDisabled ? 'opacity-50' : ''
+              if (hasLosingPick(index)) return null;
+
+              return (
+                <View key={index} className="space-y-2">
+                  <Text className="mb-3 font-semibold text-white">
+                    Entry {index + 1}
+                  </Text>
+                  <View className="flex-row flex-wrap gap-2">
+                    {TEAMS.map((team) => {
+                      const isDisabled = isTeamPickedForEntry(team, index);
+                      const isSelected = picks.find(
+                        (p) => p.entry === index && p.pick === team
+                      );
+
+                      return (
+                        <Button
+                          key={team}
+                          variant={'solid'}
+                          onPress={() => handlePickChange(team, index)}
+                          disabled={isDisabled}
+                          className={`flex-grow basis-[23%] ${
+                            isSelected
+                              ? 'bg-green-500'
+                              : isDisabled
+                              ? 'bg-zinc-600 opacity-50' // Greyed out style
+                              : 'bg-zinc-700'
                           }`}
                         >
-                          {team}
-                        </ButtonText>
-                      </Button>
-                    );
-                  })}
+                          <ButtonText
+                            className={`text-white ${
+                              isDisabled ? 'opacity-50' : ''
+                            }`}
+                          >
+                            {team}
+                          </ButtonText>
+                        </Button>
+                      );
+                    })}
+                  </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
 
             <Button onPress={handleSubmit} className="w-full mt-4 bg-blue-600">
               <ButtonText>Submit Picks</ButtonText>
