@@ -88,7 +88,7 @@ export default function NewTable() {
     <ScrollView horizontal className="w-full">
       <Table className="w-full border border-gray-700">
         <TableHeader>
-          <TableRow className="bg-gray-900">
+          <TableRow className="bg-gray-900 border-b border-gray-700">
             {tableHead.map((header, index) => (
               <TableHead
                 key={`header-${index}`}
@@ -103,7 +103,10 @@ export default function NewTable() {
         </TableHeader>
         <TableBody>
           {tableData.map((rowData, rowIndex) => (
-            <TableRow key={rowIndex} className="bg-gray-900">
+            <TableRow
+              key={rowIndex}
+              className="bg-gray-900 border-b border-gray-700"
+            >
               {rowData.map((cellData, cellIndex) => (
                 <TableData
                   key={`${rowIndex}-${cellIndex}`}

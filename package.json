@@ -31,6 +31,7 @@
     "expo": "~52.0.23",
     "expo-auth-session": "^6.0.1",
     "expo-haptics": "~14.0.0",
+    "expo-linear-gradient": "~14.0.1",
     "expo-random": "^14.0.1",
     "expo-status-bar": "~2.0.0",
     "lucide-react-native": "^0.469.0",
@@ -42,13 +43,11 @@
     "react-native-css-interop": "^0.1.22",
     "react-native-dotenv": "^3.4.11",
     "react-native-reanimated": "^3.16.6",
-    "react-native-reanimated-table": "^0.0.2",
     "react-native-safe-area-context": "^5.0.0",
     "react-native-screens": "~4.4.0",
     "react-native-svg": "^15.2.0",
     "react-native-web": "~0.19.13",
-    "tailwindcss": "^3.4.17",
-    "expo-linear-gradient": "~14.0.1"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

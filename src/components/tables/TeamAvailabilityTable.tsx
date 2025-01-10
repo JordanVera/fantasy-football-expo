@@ -55,16 +55,20 @@ export default function TeamAvailabilityTable() {
     });
   });
 
+  const cellStyle = 'w-16 min-w-[64px] px-2 py-2 text-center border-gray-700';
+
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
         <Table className="w-full border border-gray-700">
           <TableHeader>
-            <TableRow className="bg-gray-900">
+            <TableRow className="bg-gray-900 border-b border-gray-700">
               {TEAMS.map((team, index) => (
                 <TableHead
                   key={index}
-                  className="px-2 py-3 text-xs font-medium tracking-wider text-center text-white"
+                  className={`${cellStyle} text-xs font-medium tracking-wider text-white ${
+                    index !== TEAMS.length - 1 ? 'border-r' : ''
+                  }`}
                 >
                   {team}
                 </TableHead>
@@ -72,11 +76,11 @@ export default function TeamAvailabilityTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className="bg-gray-900">
+            <TableRow className="bg-gray-900 border-b border-gray-700">
               {TEAMS.map((team, index) => (
                 <TableData
                   key={index}
-                  className={`px-2 py-2 text-center border-gray-700 ${
+                  className={`${cellStyle}  ${
                     index !== TEAMS.length - 1 ? 'border-r' : ''
                   }`}
                 >
