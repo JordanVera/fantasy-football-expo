@@ -86,45 +86,41 @@ export default function NewTable() {
 
   return (
     <ScrollView horizontal className="w-full">
-      <ScrollView>
-        <Table className="w-full border border-gray-700">
-          <TableHeader>
-            <TableRow className="bg-gray-900">
-              {tableHead.map((header, index) => (
-                <TableHead
-                  key={`header-${index}`}
-                  className={`text-white text-center font-medium p-2.5 ${
-                    index === 0 ? 'w-48' : 'w-24'
-                  }`}
+      <Table className="w-full border border-gray-700">
+        <TableHeader>
+          <TableRow className="bg-gray-900">
+            {tableHead.map((header, index) => (
+              <TableHead
+                key={`header-${index}`}
+                className={`text-white text-center font-medium p-2.5 ${
+                  index === 0 ? 'w-48' : 'w-24'
+                }`}
+              >
+                {header}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {tableData.map((rowData, rowIndex) => (
+            <TableRow key={rowIndex} className="bg-gray-900">
+              {rowData.map((cellData, cellIndex) => (
+                <TableData
+                  key={`${rowIndex}-${cellIndex}`}
+                  className={`${cellIndex === 0 ? 'w-48' : 'w-24'} text-center`}
+                  style={{
+                    color: rowStyles[rowIndex][cellIndex].color,
+                    fontSize: rowStyles[rowIndex][cellIndex].fontSize,
+                    padding: rowStyles[rowIndex][cellIndex].padding,
+                  }}
                 >
-                  {header}
-                </TableHead>
+                  {cellData}
+                </TableData>
               ))}
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {tableData.map((rowData, rowIndex) => (
-              <TableRow key={rowIndex} className="bg-gray-900">
-                {rowData.map((cellData, cellIndex) => (
-                  <TableData
-                    key={`${rowIndex}-${cellIndex}`}
-                    className={`${
-                      cellIndex === 0 ? 'w-48' : 'w-24'
-                    } text-center`}
-                    style={{
-                      color: rowStyles[rowIndex][cellIndex].color,
-                      fontSize: rowStyles[rowIndex][cellIndex].fontSize,
-                      padding: rowStyles[rowIndex][cellIndex].padding,
-                    }}
-                  >
-                    {cellData}
-                  </TableData>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </ScrollView>
+          ))}
+        </TableBody>
+      </Table>
     </ScrollView>
   );
 }
