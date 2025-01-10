@@ -21,7 +21,7 @@ export default function UsersTable() {
   ];
 
   // Add console.log to check losers data
-  console.log('Losers data:', losers);
+  // console.log('Losers data:', losers);
 
   // Create table data and styles together
   const { tableData, rowStyles } = users?.reduce(
