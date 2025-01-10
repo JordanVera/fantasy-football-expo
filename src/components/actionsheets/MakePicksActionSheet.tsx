@@ -250,7 +250,7 @@ export default function MakePicksActionSheet() {
 
       <Actionsheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ActionsheetBackdrop />
-        <ActionsheetContent className="max-h-[85%] bg-zinc-800 border-0">
+        <ActionsheetContent className="max-h-[75%] bg-zinc-800 border-0">
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>

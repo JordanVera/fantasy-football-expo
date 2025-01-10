@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { DashboardScreen } from '../screens/DashboardScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { RulesScreen } from '../screens/RulesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,12 +29,21 @@ export function BottomTabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dashboard" size={size} color={color} />
+          ),
+        }}
+      /> */}
+      <Tab.Screen
+        name="Rules"
+        component={RulesScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="rules" size={size} color={color} />
           ),
         }}
       />
