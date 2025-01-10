@@ -84,7 +84,7 @@ export default function TeamAvailabilityTable() {
                     index !== TEAMS.length - 1 ? 'border-r' : ''
                   }`}
                 >
-                  <View className="flex-col items-center">
+                  <View className="flex-col items-center w-full">
                     <Text className="text-white">{teamCounts[team]}</Text>
                     <Text className="text-xs text-gray-500">
                       {numberOfTotalActiveEntries
