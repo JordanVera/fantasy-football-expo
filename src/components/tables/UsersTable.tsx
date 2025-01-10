@@ -21,7 +21,7 @@ interface GroupedPicks {
 }
 
 export default function NewTable() {
-  const { users, loadingUsers, losers } = useUsers();
+  const { users, loadingUsers, losers, hasLosingPick } = useUsers();
 
   // Keep the display 1-based for users
   const tableHead = [
@@ -41,7 +41,34 @@ export default function NewTable() {
       }, {});
 
       [...Array(user.bullets || 0)].forEach((_, index) => {
-        const userName = `${user.username} (${index + 1})`;
+        const entryNumber = index + 1;
+        const isNotActive = (entryNumber: number) => {
+          const userWithPicks = users.find((u) => u.id === user?.id);
+          if (!userWithPicks?.Picks || !losers) return false;
+
+          const entryPicks = userWithPicks.Picks.filter(
+            (pick) => pick.entryNumber === entryNumber
+          );
+
+          // Check if ANY pick for this entry matches ANY loser
+          return entryPicks.some((pick) =>
+            losers.some(
+              (loser) => loser.team === pick.team && loser.week === pick.week
+            )
+          );
+        };
+        const userName = (
+          <>
+            {user.username}{' '}
+            <Text
+              className={
+                !isNotActive(index) ? 'text-emerald-500' : 'text-red-500'
+              }
+            >
+              ({entryNumber})
+            </Text>
+          </>
+        );
         const rowData = [userName];
         const rowStyle = [
           {
@@ -128,6 +155,6 @@ export default function NewTable() {
           </TableBody>
         </Table>
       </ScrollView>
-    </View> 
+    </View>
   );
 }
