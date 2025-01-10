@@ -1,8 +1,17 @@
-import { ScrollView, Text, View, Dimensions } from 'react-native';
-import { Table, Row, Rows } from 'react-native-reanimated-table';
+import React from 'react';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableData,
+  TableRow,
+  TableFooter,
+} from '@/src/components/ui/table';
 import { useUsers } from '@/src/context/UserContext';
-import type Pick from '@/src/types/Pick';
 import { NUMBER_OF_WEEKS } from '@env';
+import { ScrollView, Text } from 'react-native';
+import type Pick from '@/src/types/Pick';
 
 // Define interface for the grouped picks structure
 interface GroupedPicks {
@@ -11,7 +20,7 @@ interface GroupedPicks {
   };
 }
 
-export default function UsersTable() {
+export default function NewTable() {
   const { users, loadingUsers, losers } = useUsers();
 
   // Keep the display 1-based for users
@@ -20,10 +29,7 @@ export default function UsersTable() {
     ...[...Array(Number(NUMBER_OF_WEEKS))].map((_, i) => `Week ${i + 1}`),
   ];
 
-  // Add console.log to check losers data
-  // console.log('Losers data:', losers);
-
-  // Create table data and styles together
+  // Create table data and styles
   const { tableData, rowStyles } = users?.reduce(
     (acc, user) => {
       const groupedPicks = user.Picks?.reduce<GroupedPicks>((grouped, pick) => {
@@ -79,48 +85,46 @@ export default function UsersTable() {
   }
 
   return (
-    <View className="w-full">
-      <ScrollView horizontal className="w-full">
-        <ScrollView>
-          <Table borderStyle={{ borderWidth: 1, borderColor: '#404040' }}>
-            <Row
-              data={tableHead.map((header, index) => (
-                <Text
+    <ScrollView horizontal className="w-full">
+      <ScrollView>
+        <Table className="w-full border border-gray-700">
+          <TableHeader>
+            <TableRow className="bg-gray-900">
+              {tableHead.map((header, index) => (
+                <TableHead
                   key={`header-${index}`}
-                  style={{
-                    color: '#ffffff',
-                    fontSize: 14,
-                    fontWeight: '500',
-                    textAlign: 'center',
-                    padding: 10,
-                    width: index === 0 ? 192 : 96,
-                  }}
+                  className={`text-white text-center font-medium p-2.5 ${
+                    index === 0 ? 'w-48' : 'w-24'
+                  }`}
                 >
                   {header}
-                </Text>
+                </TableHead>
               ))}
-              style={{ backgroundColor: '#111827', height: 40 }}
-            />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {tableData.map((rowData, rowIndex) => (
-              <Row
-                key={rowIndex}
-                data={rowData.map((cellData, cellIndex) => (
-                  <Text
+              <TableRow key={rowIndex} className="bg-gray-900">
+                {rowData.map((cellData, cellIndex) => (
+                  <TableData
                     key={`${rowIndex}-${cellIndex}`}
-                    style={[
-                      rowStyles[rowIndex][cellIndex],
-                      { width: cellIndex === 0 ? 192 : 96 },
-                    ]}
+                    className={`${
+                      cellIndex === 0 ? 'w-48' : 'w-24'
+                    } text-center`}
+                    style={{
+                      color: rowStyles[rowIndex][cellIndex].color,
+                      fontSize: rowStyles[rowIndex][cellIndex].fontSize,
+                      padding: rowStyles[rowIndex][cellIndex].padding,
+                    }}
                   >
                     {cellData}
-                  </Text>
+                  </TableData>
                 ))}
-                style={{ backgroundColor: '#111827', height: 40 }}
-              />
+              </TableRow>
             ))}
-          </Table>
-        </ScrollView>
+          </TableBody>
+        </Table>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
