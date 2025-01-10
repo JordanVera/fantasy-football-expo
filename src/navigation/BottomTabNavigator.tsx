@@ -16,7 +16,7 @@ export function BottomTabNavigator() {
         tabBarInactiveTintColor: '#666666',
         tabBarStyle: {
           backgroundColor: '#000000',
-          borderTopColor: '#666666',
+          borderTopColor: '#000000',
         },
       }}
     >
@@ -43,7 +43,7 @@ export function BottomTabNavigator() {
         component={RulesScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="rules" size={size} color={color} />
+            <MaterialIcons name="gavel" size={size} color={color} />
           ),
         }}
       />

@@ -18,10 +18,6 @@ export function HomeScreen() {
     <SafeAreaView className="flex-1 w-full bg-black">
       <ScrollView className="flex-1 w-full px-4">
         <View className="items-center justify-center w-full gap-5">
-          <Text className="text-2xl text-white ">
-            Welcome, {user?.username || 'User'}!
-          </Text>
-
           <View className="flex-row justify-center w-full gap-5">
             <MakePicksActionSheet />
             <TouchableOpacity

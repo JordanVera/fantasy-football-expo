@@ -1,11 +1,13 @@
 import { View, Text } from 'react-native';
 import { useUsers } from '../../context/UserContext';
+import { useAuth } from '../../context/AuthContext';
 import User from '../../types/User';
 import { BUYIN_PRICE } from '@env';
 import { getStartingWeek } from '../../utils/dates';
 
 export function HomeScreenHero() {
-  const { user, users } = useUsers();
+  const { users } = useUsers();
+  const { user } = useAuth();
 
   const totalUserBullets = users?.reduce(
     (total: number, user: User) => total + user?.bullets,
@@ -22,7 +24,10 @@ export function HomeScreenHero() {
   const VIG = 10;
 
   return (
-    <View className="flex items-center w-full gap-5 p-5 bg-gray-900 border border-gray-700 rounded-lg">
+    <View className="flex w-full gap-5 p-5 bg-gray-900 border border-gray-700 rounded-lg">
+      <Text className="text-2xl text-left text-white">
+        Welcome, {user?.username || 'User'}!
+      </Text>
       <Text className="w-full text-lg font-bold text-white">
         There is a total of {totalActiveUsers} users with {totalUserBullets}{' '}
         entries which makes the prize pool $
