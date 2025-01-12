@@ -29,7 +29,6 @@ export default function NewTable() {
     ...[...Array(Number(NUMBER_OF_WEEKS))].map((_, i) => `Week ${i + 1}`),
   ];
 
-  // Create table data and styles
   const { tableData, rowStyles } = users?.reduce(
     (acc, user) => {
       const groupedPicks = user.Picks?.reduce<GroupedPicks>((grouped, pick) => {
