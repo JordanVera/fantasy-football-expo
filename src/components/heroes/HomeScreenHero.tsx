@@ -26,7 +26,7 @@ export function HomeScreenHero() {
   const currentWeek = getStartingWeek() + 1;
 
   return (
-    <View className="w-full gap-4 p-5 border rounded-lg border-zinc-800 bg-zinc-900">
+    <View className="w-full gap-4 p-5 border rounded-lg border-zinc-700 bg-zinc-900">
       <Text className="text-2xl font-bold text-white ">
         Welcome, {user?.username || 'User'}!
       </Text>

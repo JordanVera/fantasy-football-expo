@@ -60,14 +60,14 @@ export default function TeamAvailabilityTable() {
     });
   });
 
-  const cellStyle = 'w-16 px-2 py-2 text-center border-gray-700';
+  const cellStyle = 'w-16 px-2 py-2 text-center border-zinc-700';
 
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
-        <Table className="w-full border border-gray-700 rounded-lg">
+        <Table className="w-full border rounded-lg border-zinc-700">
           <TableHeader>
-            <TableRow className="bg-black border-b border-gray-700 rounded-t-lg">
+            <TableRow className="border-b rounded-t-lg border-zinc-700 bg-zinc-900">
               {TEAMS.map((team, index) => (
                 <TableHead
                   key={index}
@@ -81,7 +81,7 @@ export default function TeamAvailabilityTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow className="bg-black border-b border-gray-700 rounded-b-lg">
+            <TableRow className="border-b rounded-b-lg border-zinc-700 bg-zinc-900">
               {TEAMS.map((team, index) => (
                 <TableData
                   key={index}

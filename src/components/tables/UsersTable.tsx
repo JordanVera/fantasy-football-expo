@@ -112,7 +112,7 @@ export default function NewTable() {
   return (
     <View className="w-full">
       <ScrollView horizontal className="w-full">
-        <Table className="w-full border border-gray-700 rounded-lg">
+        <Table className="w-full border rounded-lg border-zinc-700">
           <TableHeader>
             <TableRow className="border-b rounded-t-lg border-zinc-700 bg-zinc-900">
               {tableHead.map((header, index) => (
