@@ -4,8 +4,10 @@ import { SafeAreaView, View, Text, Switch } from 'react-native';
 export function SettingsScreen() {
   return (
     <SafeAreaView className="flex-1 bg-gray-900">
-      <View className="flex-row items-center justify-between py-3 border border-gray-300">
-        <Text className="text-base text-white">Dark Mode</Text>
+      <View className="flex-row items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <Text className="text-base text-gray-900 dark:text-white">
+          Dark Mode
+        </Text>
         {/* <Switch
           value={theme === 'dark'}
           onValueChange={toggleTheme}

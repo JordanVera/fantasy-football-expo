@@ -6,7 +6,6 @@ import {
   TableHead,
   TableData,
   TableRow,
-  TableFooter,
 } from '@/src/components/ui/table';
 import { useUsers } from '@/src/context/UserContext';
 import { NUMBER_OF_WEEKS } from '@env';
@@ -115,7 +114,7 @@ export default function NewTable() {
       <ScrollView horizontal className="w-full">
         <Table className="w-full border border-gray-700 rounded-lg">
           <TableHeader>
-            <TableRow className="bg-black border-b border-gray-700 rounded-t-lg">
+            <TableRow className="border-b rounded-t-lg border-zinc-700 bg-zinc-900">
               {tableHead.map((header, index) => (
                 <TableHead
                   key={`header-${index}`}
@@ -132,7 +131,9 @@ export default function NewTable() {
             {tableData.map((rowData, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className="bg-black border-b border-gray-700"
+                className={`border-b border-zinc-700 ${
+                  rowIndex % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-900'
+                }`}
               >
                 {rowData.map((cellData, cellIndex) => (
                   <TableData
