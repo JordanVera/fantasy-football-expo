@@ -44,14 +44,22 @@ export default function MakePicksActionSheet() {
     []
   );
   const [availableWeeks, setAvailableWeeks] = useState<number[]>([]);
+  const [loadingWeeks, setLoadingWeeks] = useState<boolean>(false);
 
   useEffect(() => {
     fetchWeeks();
   }, []);
 
   const fetchWeeks = async () => {
-    const weeks = await api.getAvailableWeeks();
-    setAvailableWeeks(weeks);
+    try {
+      setLoadingWeeks(true);
+      const weeks = await api.getAvailableWeeks();
+      setAvailableWeeks(weeks);
+    } catch (error) {
+      console.error('Error fetching weeks:', error);
+    } finally {
+      setLoadingWeeks(false);
+    }
   };
 
   const handleWeekSelect = (week: number) => {
@@ -261,7 +269,13 @@ export default function MakePicksActionSheet() {
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>
-          {renderContent()}
+          {loadingWeeks ? (
+            <View className="items-center justify-center flex-1">
+              <Text className="text-white">Loading...</Text>
+            </View>
+          ) : (
+            renderContent()
+          )}
         </ActionsheetContent>
       </Actionsheet>
     </>

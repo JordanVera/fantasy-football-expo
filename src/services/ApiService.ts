@@ -127,7 +127,7 @@ export class ApiService {
   }
 
   async getAvailableWeeks(): Promise<number[]> {
-    const response = await fetch(`${this.baseUrl}/weeks/available`, {
+    const response = await fetch(`${this.baseUrl}/dates/available`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export class ApiService {
   }
 
   async getStartingWeek(): Promise<number> {
-    const response = await fetch(`${this.baseUrl}/weeks/starting`, {
+    const response = await fetch(`${this.baseUrl}/dates/starting`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
