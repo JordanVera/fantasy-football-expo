@@ -16,8 +16,8 @@ router.get('/all', authenticateToken, getAllUsers);
 // GET /api/users/:id - Get a single user with their picks
 router.get('/:id', authenticateToken, getUser);
 
-router.post('/push-token', authenticateToken, updatePushToken);
-router.delete('/push-token', authenticateToken, removePushToken);
-router.post('/test-notification/:userId', sendTestNotification);
+// router.post('/push-token', authenticateToken, updatePushToken);
+// router.delete('/push-token', authenticateToken, removePushToken);
+// router.post('/test-notification/:userId', sendTestNotification);
 
 export default router;

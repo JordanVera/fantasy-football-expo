@@ -21,35 +21,35 @@ export function SettingsScreen() {
   const [pushNotifications, setPushNotifications] = useState(true);
   const [pickReminders, setPickReminders] = useState(true);
 
-  const handlePushToggle = async (value: boolean) => {
-    setPushNotifications(value);
-    if (value) {
-      try {
-        // Check current permission status
-        const { status } = await Notifications.getPermissionsAsync();
-        console.log('Current permission status:', status);
+  // const handlePushToggle = async (value: boolean) => {
+  //   setPushNotifications(value);
+  //   if (value) {
+  //     try {
+  //       // Check current permission status
+  //       const { status } = await Notifications.getPermissionsAsync();
+  //       console.log('Current permission status:', status);
 
-        // Get the push token
-        const token = await registerForPushNotifications();
-        console.log('Received push token:', token);
+  //       // Get the push token
+  //       const token = await registerForPushNotifications();
+  //       console.log('Received push token:', token);
 
-        if (token && user?.id) {
-          // Save the token to the database
-          console.log('Attempting to save token for user:', user.id);
-          const result = await api.updatePushToken(user.id, token);
-          console.log('Save token result:', result);
-        } else {
-          console.log('Missing token or user ID:', { token, userId: user?.id });
-        }
-        await registerWeeklyNotification();
-      } catch (error) {
-        console.error('Error in handlePushToggle:', error);
-      }
-    } else {
-      await api.removePushToken(user?.id);
-      await Notifications.cancelAllScheduledNotificationsAsync();
-    }
-  };
+  //       if (token && user?.id) {
+  //         // Save the token to the database
+  //         console.log('Attempting to save token for user:', user.id);
+  //         const result = await api.updatePushToken(user.id, token);
+  //         console.log('Save token result:', result);
+  //       } else {
+  //         console.log('Missing token or user ID:', { token, userId: user?.id });
+  //       }
+  //       await registerWeeklyNotification();
+  //     } catch (error) {
+  //       console.error('Error in handlePushToggle:', error);
+  //     }
+  //   } else {
+  //     await api.removePushToken(user?.id);
+  //     await Notifications.cancelAllScheduledNotificationsAsync();
+  //   }
+  // };
 
   return (
     <SafeAreaView className="flex-1 bg-gray-900">
@@ -80,7 +80,7 @@ export function SettingsScreen() {
             <Text className="text-white">Push Notifications</Text>
             <Switch
               value={pushNotifications}
-              onValueChange={handlePushToggle}
+              // onValueChange={handlePushToggle}
             />
           </View>
           <View className="flex-row items-center justify-between">
