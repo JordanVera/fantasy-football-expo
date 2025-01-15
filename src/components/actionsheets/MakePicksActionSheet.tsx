@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { Button, ButtonText } from '@/src/components/ui/button';
 import { Icon } from '@/src/components/ui/icon';
 import {
@@ -275,9 +275,16 @@ export default function MakePicksActionSheet() {
             <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>
           {hasNoActiveEntries() ? (
-            <View className="items-center justify-center p-4 py-24 rounded-lg bg-zinc-800">
-              <Text className="text-lg text-white">
-                You have no active entries
+            <View className="items-center justify-center p-4 py-10 rounded-lg bg-zinc-800">
+              <Image
+                source={require('../../media/sad.gif')}
+                style={{ width: 150, height: 150, marginBottom: 16 }}
+              />
+              <Text className="text-3xl font-medium text-white">
+                Sorry, looks like you're out
+              </Text>
+              <Text className="text-xl text-white">
+                You have no active entries 😢
               </Text>
             </View>
           ) : loadingWeeks ? (
