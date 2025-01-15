@@ -8,17 +8,20 @@ datasource db {
 }
 
 model User {
-  id               Int       @id @default(autoincrement())
-  firstname        String
-  lastname         String
-  username         String    @unique
-  password         String
-  email            String    @unique
-  bullets          Int       @default(0) @map("bullets")
-  emailVerified    DateTime? @map("emailVerified")
-  phoneNumber      String    @unique @map("phoneNumber")
-  resetToken       String?   @unique
-  resetTokenExpiry DateTime?
+  id                Int       @id @default(autoincrement())
+  firstname         String
+  lastname          String
+  username          String    @unique
+  password          String
+  email             String    @unique
+  bullets           Int       @default(0) @map("bullets")
+  emailVerified     DateTime? @map("emailVerified")
+  phoneNumber       String    @unique @map("phoneNumber")
+  pushNotifications Boolean   @default(true) @map("pushNotifications")
+  pickReminders     Boolean   @default(true) @map("pickReminders")
+  pushToken         String?   @unique @map("pushToken")
+  resetToken        String?   @unique
+  resetTokenExpiry  DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

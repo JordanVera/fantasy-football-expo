@@ -6,6 +6,8 @@ type User = {
   username?: string;
   phoneNumber?: string;
   bullets?: number;
+  pushNotifications?: boolean;
+  pickReminders?: boolean;
 };
 
 export default User;

@@ -195,6 +195,40 @@ export class ApiService {
 
     return response.json();
   }
+
+  async updatePushToken(userId: number, pushToken: string) {
+    const response = await fetch(`${API_URL}/users/push-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ userId, pushToken }),
+    });
+    return response.json();
+  }
+
+  async removePushToken(userId: string | undefined) {
+    if (!userId) return;
+
+    const response = await fetch(`${this.baseUrl}/users/push-token`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to remove push token');
+    }
+
+    return response.json();
+  }
+
+  // Add these methods to your existing ApiService class
 }
 
 // Export a default instance
