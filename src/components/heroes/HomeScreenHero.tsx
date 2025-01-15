@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { useUsers } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
 import User from '../../types/User';
@@ -16,6 +16,7 @@ export function HomeScreenHero() {
       const week = await api.getStartingWeek();
       setCurrentWeek(week);
     };
+
     fetchCurrentWeek();
   }, []);
 
@@ -39,51 +40,58 @@ export function HomeScreenHero() {
   const VIG = 10;
 
   return (
-    <View className="w-full gap-4 p-5 border rounded-lg border-zinc-700 bg-zinc-900">
-      <Text className="text-2xl font-bold text-white ">
-        Welcome, {user?.username || 'User'}!
-      </Text>
-
-      <Text className="text-base text-white">
-        <Text className="font-bold text-emerald-500">{totalActiveUsers}</Text>{' '}
-        Users
-      </Text>
-
-      <Text className="text-base text-white">
-        <Text className="font-bold text-emerald-500">{totalUserBullets}</Text>{' '}
-        Entries
-      </Text>
-
-      <Text className="text-base text-white">
-        <Text className="font-bold text-emerald-500">
-          {getTotalActiveEntries()}
-        </Text>{' '}
-        Active Entries
-      </Text>
-
-      <Text className="text-base text-white">
-        <Text className="font-bold text-emerald-500">
-          ${totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
-        </Text>{' '}
-        Prize Pool
-      </Text>
-
-      <Text className="text-base font-bold text-left text-white">
-        Please make sure to read the rules!
-      </Text>
-
-      <View className="p-3 mt-2 bg-red-900 rounded">
-        <Text className="text-sm text-red-200">
-          It is currently week <Text className="font-bold">{currentWeek}</Text>.
-          Please note you must make your picks on Thursday before 6pm CST (7pm
-          EST) for week {currentWeek}.
-          <Text className="font-bold">
-            {' '}
-            Even if you are not picking the Thursday game
-          </Text>
-          .
+    <ImageBackground
+      source={require('../../media/jettas.jpeg')}
+      className="w-full overflow-hidden rounded-lg"
+      // imageStyle={{}}
+    >
+      <View className="w-full gap-4 p-5 bg-black/80">
+        <Text className="text-2xl font-bold text-white ">
+          Welcome, {user?.username || 'User'}!
         </Text>
+
+        <Text className="text-base text-white">
+          <Text className="font-bold text-emerald-500">{totalActiveUsers}</Text>{' '}
+          Users
+        </Text>
+
+        <Text className="text-base text-white">
+          <Text className="font-bold text-emerald-500">{totalUserBullets}</Text>{' '}
+          Entries
+        </Text>
+
+        <Text className="text-base text-white">
+          <Text className="font-bold text-emerald-500">
+            {getTotalActiveEntries()}
+          </Text>{' '}
+          Active Entries
+        </Text>
+
+        <Text className="text-base text-white">
+          <Text className="font-bold text-emerald-500">
+            ${totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
+          </Text>{' '}
+          Prize Pool
+        </Text>
+
+        <Text className="text-base font-bold text-left text-white">
+          Please make sure to read the rules!
+        </Text>
+
+        <View className="p-3 mt-2 rounded bg-red-900/90">
+          <Text className="text-sm text-red-200">
+            It is currently week{' '}
+            <Text className="font-bold">{currentWeek}</Text>. Please note you
+            must make your picks on Thursday before 6pm CST (7pm EST) for week{' '}
+            {currentWeek}.
+            <Text className="font-bold">
+              {' '}
+              Even if you are not picking the Thursday game
+            </Text>
+            .
+          </Text>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
