@@ -1,11 +1,11 @@
 import moment from 'moment';
 
 const dates = [
-  moment('2023-09-05'), // Week 1
-  moment('2024-09-12'), // Week 2
-  moment('2024-09-19'), // Week 3
-  moment('2024-09-26'), // Week 4
-  moment('2024-10-03'), // Week 5
+  moment('2025-09-05'), // Week 1
+  moment('2025-09-12'), // Week 2
+  moment('2025-09-19'), // Week 3
+  moment('2025-09-26'), // Week 4
+  moment('2025-10-03'), // Week 5
   moment('2025-10-10'), // Week 6
   moment('2025-10-17'), // Week 7
   moment('2025-10-24'), // Week 8

@@ -10,7 +10,7 @@ export const createPicks = async (req, res) => {
   const filteredPicks = picks.filter((item) => item != null);
 
   // Makes it impossible to make a pick if week has past
-  if (Number(week + 1) < getStartingWeek()) {
+  if (Number(week) < getStartingWeek()) {
     console.log('picks are too late');
     return res.status(400).json({ error: 'You are too late bru' });
   }
