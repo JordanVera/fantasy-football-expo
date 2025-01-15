@@ -159,6 +159,42 @@ export class ApiService {
 
     return (await response.json()).startingWeek;
   }
+
+  async forgotPassword(email: string) {
+    const response = await fetch(`${this.baseUrl}/auth/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(
+        error.error || 'Failed to process password reset request'
+      );
+    }
+
+    return response.json();
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const response = await fetch(`${this.baseUrl}/auth/reset-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, newPassword }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to reset password');
+    }
+
+    return response.json();
+  }
 }
 
 // Export a default instance

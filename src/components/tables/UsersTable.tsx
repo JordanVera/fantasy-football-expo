@@ -131,9 +131,10 @@ export default function NewTable() {
             {tableData.map((rowData, rowIndex) => (
               <TableRow
                 key={rowIndex}
-                className={`border-b border-zinc-700 ${
-                  rowIndex % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-900'
-                }`}
+                className={`border-b border-zinc-700 bg-zinc-900 `}
+                // ${
+                //   rowIndex % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-900'
+                // }
               >
                 {rowData.map((cellData, cellIndex) => (
                   <TableData
