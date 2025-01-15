@@ -3,9 +3,9 @@ import { authenticateToken } from '../middleware/auth.js';
 import {
   getAllUsers,
   getUser,
-  updatePushToken,
-  removePushToken,
-  sendTestNotification,
+  // updatePushToken,
+  // removePushToken,
+  // sendTestNotification,
 } from '../controllers/users.js';
 
 const router = express.Router();

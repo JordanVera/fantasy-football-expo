@@ -162,6 +162,11 @@ export default function MakePicksActionSheet() {
     );
   };
 
+  const hasNoActiveEntries = () => {
+    if (!user?.bullets) return true;
+    return [...Array(user.bullets)].every((_, index) => hasLosingPick(index));
+  };
+
   const renderContent = () => {
     if (step === 'week') {
       return (
@@ -269,7 +274,13 @@ export default function MakePicksActionSheet() {
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator className="bg-zinc-500" />
           </ActionsheetDragIndicatorWrapper>
-          {loadingWeeks ? (
+          {hasNoActiveEntries() ? (
+            <View className="items-center justify-center p-4 py-24 rounded-lg bg-zinc-800">
+              <Text className="text-lg text-white">
+                You have no active entries
+              </Text>
+            </View>
+          ) : loadingWeeks ? (
             <View className="items-center justify-center flex-1">
               <Text className="text-white">Loading...</Text>
             </View>
