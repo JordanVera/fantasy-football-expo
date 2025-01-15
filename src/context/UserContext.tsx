@@ -15,6 +15,7 @@ type UsersContextType = {
   losers: Loser[];
   loadingLosers: boolean;
   fetchLosers: () => Promise<void>;
+  getTotalActiveEntries: () => number;
 };
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
@@ -28,7 +29,8 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
 
   const [losers, setLosers] = useState<Loser[]>([]);
   const [loadingLosers, setLoadingLosers] = useState<boolean>(false);
-
+  const [numberOfTotalActiveEntries, setNumberOfTotalActiveEntries] =
+    useState<number>(0);
   const [error, setError] = useState<string | null>(null);
 
   const fetchUsers = async (): Promise<void> => {
@@ -64,6 +66,24 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const getTotalActiveEntries = (): number => {
+    return users.reduce((total, user) => {
+      // Get all entries for this user
+      const totalEntries = user.bullets || 0;
+      const inactiveEntries = user.Picks?.reduce((count, pick) => {
+        // Check if this pick's entry has a losing pick
+        const hasLosingPick = losers.some(
+          (loser) => loser.team === pick.team && loser.week === pick.week
+        );
+        // If this entry has a losing pick, mark it as inactive
+        return hasLosingPick ? new Set([...count, pick.entryNumber]) : count;
+      }, new Set<number>());
+
+      // Add the number of active entries (total - inactive) to the running total
+      return total + (totalEntries - (inactiveEntries?.size || 0));
+    }, 0);
+  };
+
   useEffect(() => {
     fetchUsers();
     fetchLosers();
@@ -79,6 +99,7 @@ export const UsersProvider: React.FC<{ children: ReactNode }> = ({
         losers,
         loadingLosers,
         fetchLosers,
+        getTotalActiveEntries,
       }}
     >
       {children}

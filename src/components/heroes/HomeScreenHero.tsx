@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useUsers } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
@@ -7,8 +7,13 @@ import { BUYIN_PRICE } from '@env';
 import { getStartingWeek } from '../../utils/dates';
 
 export function HomeScreenHero() {
-  const { users } = useUsers();
+  const { users, getTotalActiveEntries } = useUsers();
   const { user } = useAuth();
+
+  useEffect(() => {
+    console.log('TOTAL ACTIVE ENTRIES');
+    console.log(getTotalActiveEntries());
+  }, [getTotalActiveEntries]);
 
   const totalUserBullets = users?.reduce(
     (total: number, user: User) => total + (user?.bullets ?? 0),
@@ -33,12 +38,12 @@ export function HomeScreenHero() {
 
       <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">{totalActiveUsers}</Text>{' '}
-        Active Users
+        Users
       </Text>
 
       <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">{totalUserBullets}</Text>{' '}
-        Total Entries
+        Entries
       </Text>
 
       <Text className="text-base text-white">
@@ -64,6 +69,13 @@ export function HomeScreenHero() {
           .
         </Text>
       </View>
+
+      <Text className="text-base text-white">
+        <Text className="font-bold text-emerald-500">
+          {getTotalActiveEntries()}
+        </Text>{' '}
+        Active Entries
+      </Text>
     </View>
   );
 }
