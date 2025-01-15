@@ -56,12 +56,19 @@ export function HomeScreenHero() {
 
       <Text className="text-base text-white">
         <Text className="font-bold text-emerald-500">
+          {getTotalActiveEntries()}
+        </Text>{' '}
+        Active Entries
+      </Text>
+
+      <Text className="text-base text-white">
+        <Text className="font-bold text-emerald-500">
           ${totalUserBullets * (Number(BUYIN_PRICE) - VIG)}
         </Text>{' '}
         Prize Pool
       </Text>
 
-      <Text className="text-base text-left text-white ">
+      <Text className="text-base font-bold text-left text-white">
         Please make sure to read the rules!
       </Text>
 
@@ -77,13 +84,6 @@ export function HomeScreenHero() {
           .
         </Text>
       </View>
-
-      <Text className="text-base text-white">
-        <Text className="font-bold text-emerald-500">
-          {getTotalActiveEntries()}
-        </Text>{' '}
-        Active Entries
-      </Text>
     </View>
   );
 }

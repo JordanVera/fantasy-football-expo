@@ -3,9 +3,9 @@ import moment from 'moment';
 const dates = [
   moment('2023-09-05'), // Week 1
   moment('2024-09-12'), // Week 2
-  moment('2023-09-19'), // Week 3
-  moment('2025-09-26'), // Week 4
-  moment('2025-10-03'), // Week 5
+  moment('2024-09-19'), // Week 3
+  moment('2024-09-26'), // Week 4
+  moment('2024-10-03'), // Week 5
   moment('2025-10-10'), // Week 6
   moment('2025-10-17'), // Week 7
   moment('2025-10-24'), // Week 8
@@ -29,16 +29,16 @@ const getStartingWeek = () => {
   const now = moment();
 
   const startingWeek = dates.findIndex((date) => {
-    const startInHours = date.diff(now, 'hour');
-    return startInHours > 0;
+    return now.isBefore(date);
   });
 
-  return startingWeek;
+  return startingWeek + 1; // ! +1 because findindex is 0 based
 };
 
 const getAvailableWeeks = (all = false) => {
   const startingWeek = getStartingWeek();
 
+  // ! 22 is number of weeks in the season including playoffs
   const weeks = Array.from({ length: 22 }, (_, i) => i + 1).filter(
     (week) => week >= startingWeek
   );
