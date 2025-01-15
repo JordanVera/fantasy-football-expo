@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Button, ButtonText } from '@/src/components/ui/button';
 import { Icon } from '@/src/components/ui/icon';
@@ -7,7 +7,6 @@ import {
   ChevronLeftIcon,
   ClipboardCheckIcon,
 } from 'lucide-react-native';
-import { getAvailableWeeks } from '@/src/utils/dates';
 import { useAuth } from '@/src/context/AuthContext';
 import { api } from '@/src/services/ApiService';
 import * as Haptics from 'expo-haptics';
@@ -44,8 +43,16 @@ export default function MakePicksActionSheet() {
   const [picks, setPicks] = useState<Array<{ entry: number; pick: string }>>(
     []
   );
+  const [availableWeeks, setAvailableWeeks] = useState<number[]>([]);
 
-  const availableWeeks = getAvailableWeeks();
+  useEffect(() => {
+    fetchWeeks();
+  }, []);
+
+  const fetchWeeks = async () => {
+    const weeks = await api.getAvailableWeeks();
+    setAvailableWeeks(weeks);
+  };
 
   const handleWeekSelect = (week: number) => {
     setSelectedWeek(week - 1);

@@ -1,14 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { useUsers } from '../../context/UserContext';
 import { useAuth } from '../../context/AuthContext';
 import User from '../../types/User';
 import { BUYIN_PRICE } from '@env';
-import { getStartingWeek } from '../../utils/dates';
+import { api } from '@/src/services/ApiService';
 
 export function HomeScreenHero() {
   const { users, getTotalActiveEntries } = useUsers();
   const { user } = useAuth();
+  const [currentWeek, setCurrentWeek] = useState<number>(1);
+
+  useEffect(() => {
+    const fetchCurrentWeek = async () => {
+      const week = await api.getStartingWeek();
+      setCurrentWeek(week);
+    };
+    fetchCurrentWeek();
+  }, []);
 
   useEffect(() => {
     console.log('TOTAL ACTIVE ENTRIES');
@@ -28,7 +37,6 @@ export function HomeScreenHero() {
   }, 0);
 
   const VIG = 10;
-  const currentWeek = getStartingWeek() + 1;
 
   return (
     <View className="w-full gap-4 p-5 border rounded-lg border-zinc-700 bg-zinc-900">

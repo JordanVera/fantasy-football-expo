@@ -125,6 +125,40 @@ export class ApiService {
 
     return response.json();
   }
+
+  async getAvailableWeeks(): Promise<number[]> {
+    const response = await fetch(`${this.baseUrl}/weeks/available`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch available weeks');
+    }
+
+    return (await response.json()).weeks;
+  }
+
+  async getStartingWeek(): Promise<number> {
+    const response = await fetch(`${this.baseUrl}/weeks/starting`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${await AsyncStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch starting week');
+    }
+
+    return (await response.json()).startingWeek;
+  }
 }
 
 // Export a default instance
