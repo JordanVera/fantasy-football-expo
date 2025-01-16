@@ -27,7 +27,8 @@
     "morgan": "^1.10.0",
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.9",
-    "prisma": "^6.1.0"
+    "prisma": "^6.1.0",
+    "resend": "^4.1.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import { Resend } from 'resend';
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ export const signup = async (req, res) => {
       req.body;
 
     // Validate required fields
+
     if (
       !email ||
       !password ||
@@ -132,6 +134,7 @@ export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     if (!user) {
       return res.status(404).json({ error: 'No user found with this email' });
@@ -150,8 +153,22 @@ export const forgotPassword = async (req, res) => {
       },
     });
 
-    // TODO: Send email with reset link
-    // For now, just return the token in the response
+    // Send email with reset token
+    await resend.emails.send({
+      from: 'Your App <onboarding@resend.dev>',
+      to: email,
+      subject: 'Password Reset Request',
+      html: `
+        <h1>Password Reset Request</h1>
+        <p>You requested a password reset. Click the link below to reset your password:</p>
+        <a href="${process.env.FRONTEND_URL}/reset-password?token=${resetToken}">
+          Reset Password
+        </a>
+        <p>This link will expire in 1 hour.</p>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    });
+
     res.json({
       message: 'Password reset instructions sent to your email',
       resetToken, // Remove this in production
