@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button, ButtonText } from '@/src/components/ui/button';
+
 import { Icon } from '@/src/components/ui/icon';
 import {
   ChevronRightIcon,

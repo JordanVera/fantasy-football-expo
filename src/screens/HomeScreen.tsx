@@ -12,6 +12,9 @@ import MakePicksActionSheet from '@/src/components/actionsheets/MakePicksActionS
 import UsersTable from '@/src/components/tables/UsersTable';
 import TeamAvailabilityTable from '@/src/components/tables/TeamAvailabilityTable';
 import { HomeScreenHero } from '../components/heroes/HomeScreenHero';
+import { CreditCardIcon } from 'lucide-react-native';
+import { Icon } from '@/src/components/ui/icon';
+import { Button, ButtonText } from '@/src/components/ui/button';
 
 export function HomeScreen() {
   const [isCheckoutModalVisible, setIsCheckoutModalVisible] = useState(false);
@@ -25,12 +28,13 @@ export function HomeScreen() {
           <View className="flex flex-row items-center w-full gap-5">
             <MakePicksActionSheet />
 
-            <TouchableOpacity
-              className="flex-1 p-2 rounded-md bg-primary bg-cyan-500"
+            <Button
               onPress={() => setIsCheckoutModalVisible(true)}
+              className="flex-1 bg-cyan-500"
             >
-              <Text className="text-center text-white">Checkout</Text>
-            </TouchableOpacity>
+              <ButtonText>Checkout</ButtonText>
+              <Icon as={CreditCardIcon} className="text-white" size={'md'} />
+            </Button>
           </View>
 
           <UsersTable />
