@@ -5,7 +5,8 @@ import { BottomTabNavigator } from './src/navigation/BottomTabNavigator';
 import { AuthNavigator } from './src/navigation/AuthNavigator';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { UsersProvider } from './src/context/UserContext';
-
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { STRIPE_PUBLIC_KEY } from '@env';
 import 'nativewind';
 
 import './global.css';
@@ -22,14 +23,19 @@ function Navigation() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <UsersProvider>
-        <GluestackUIProvider>
-          <NavigationContainer>
-            <Navigation />
-          </NavigationContainer>
-        </GluestackUIProvider>
-      </UsersProvider>
-    </AuthProvider>
+    <StripeProvider
+      publishableKey={STRIPE_PUBLIC_KEY}
+      urlScheme="nfllastlonger"
+    >
+      <AuthProvider>
+        <UsersProvider>
+          <GluestackUIProvider>
+            <NavigationContainer>
+              <Navigation />
+            </NavigationContainer>
+          </GluestackUIProvider>
+        </UsersProvider>
+      </AuthProvider>
+    </StripeProvider>
   );
 }

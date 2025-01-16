@@ -28,7 +28,8 @@
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.9",
     "prisma": "^6.1.0",
-    "resend": "^4.1.1"
+    "resend": "^4.1.1",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

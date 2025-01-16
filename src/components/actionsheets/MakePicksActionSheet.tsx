@@ -263,7 +263,7 @@ export default function MakePicksActionSheet() {
 
   return (
     <>
-      <Button onPress={() => setIsOpen(true)} className="w-full bg-emerald-500">
+      <Button onPress={() => setIsOpen(true)} className="w-1/2 bg-emerald-500">
         <ButtonText>Make Picks</ButtonText>
         <Icon as={ClipboardCheckIcon} className="text-white" size={'md'} />
       </Button>
