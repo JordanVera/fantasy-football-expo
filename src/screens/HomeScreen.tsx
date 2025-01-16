@@ -14,8 +14,8 @@ import { HomeScreenHero } from '../components/heroes/HomeScreenHero';
 export function HomeScreen() {
   return (
     <SafeAreaView className="flex-1 w-full bg-black">
-      <ScrollView className="flex-1 w-full px-4 ">
-        <View className="items-center justify-center w-full gap-5">
+      <ScrollView className="flex-1 w-full">
+        <View className="items-center justify-center w-full gap-5 p-4">
           <HomeScreenHero />
           <TeamAvailabilityTable />
           <MakePicksActionSheet />

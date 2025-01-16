@@ -42,7 +42,7 @@ export function HomeScreenHero() {
   return (
     <ImageBackground
       source={require('../../media/jettas.jpeg')}
-      className="w-full overflow-hidden rounded-lg"
+      className="object-cover w-full overflow-hidden rounded-lg object"
       // imageStyle={{}}
     >
       <View className="w-full gap-4 p-5 bg-black/80">

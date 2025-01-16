@@ -16,7 +16,11 @@ export function BottomTabNavigator() {
         tabBarInactiveTintColor: '#666666',
         tabBarStyle: {
           backgroundColor: '#000000',
-          borderTopColor: '#000000',
+          borderColor: '#000000',
+          borderTopWidth: 1,
+          // borderTopLeftRadius: 10,
+          // borderTopRightRadius: 10,
+          borderTopColor: '#3f3f46',
         },
       }}
     >
