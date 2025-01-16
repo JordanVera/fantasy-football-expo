@@ -5,7 +5,7 @@ import usersRoutes from './users.js';
 import losersRoutes from './losers.js';
 import datesRoutes from './dates.js';
 import checkoutRoutes from './checkout.js';
-import webhookRoutes from './webhook.js';
+// import webhookRoutes from './webhook.js';
 
 const router = express.Router();
 
@@ -22,6 +22,6 @@ router.use('/users', usersRoutes);
 router.use('/losers', losersRoutes);
 router.use('/dates', datesRoutes);
 router.use('/checkout', checkoutRoutes);
-router.use('/webhook', webhookRoutes);
+// router.use('/webhook', webhookRoutes);
 
 export default router;

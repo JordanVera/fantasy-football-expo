@@ -5,16 +5,25 @@ import colors from 'colors';
 import morgan from 'morgan';
 import routes from './routes/index.js';
 import helmet from 'helmet';
+import webhookRoutes from './routes/webhook.js';
 
 dotenv.config();
 const app = express();
 
+// Increase the timeout for webhook processing
+app.timeout = 120000; // 2 minutes
+
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json());
 app.use(helmet());
 
-// Mount all routes under /api
+// Mount webhook routes before body parser
+app.use('/api/webhook', webhookRoutes);
+
+// JSON body parser for all other routes
+app.use(express.json());
+
+// Mount all other routes under /api
 app.use('/api', routes);
 
 const PORT = process.env.PORT || 3000;

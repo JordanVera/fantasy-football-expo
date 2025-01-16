@@ -22,27 +22,27 @@ export const handleStripeWebhook = async (req, res) => {
 
   try {
     switch (event.type) {
-      case 'checkout.session.completed':
-        console.log('PAYMENT SUCCESSFUL CUH');
-        const session = event.data.object;
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        console.log('Payment Intent Succeeded:', paymentIntent.id);
 
-        const userId = parseInt(session.metadata.userId);
-        const quantity = parseInt(session.metadata.quantity);
+        const userId = parseInt(paymentIntent.metadata.userId);
+        const quantity = parseInt(paymentIntent.metadata.quantity);
 
-        console.log('session.payment_status:', session.payment_status);
-        console.log('SESSION:', session);
-        console.log({ userId, quantity });
+        console.log('Processing payment for user:', { userId, quantity });
 
         try {
+          // Create checkout record
           await prisma.checkout.create({
             data: {
               userId,
               quantity,
-              stripeCheckoutId: session.id,
+              stripePaymentIntentId: paymentIntent.id,
             },
           });
 
-          await prisma.user.update({
+          // Update user's bullets
+          const updatedUser = await prisma.user.update({
             where: {
               id: userId,
             },
@@ -52,9 +52,12 @@ export const handleStripeWebhook = async (req, res) => {
               },
             },
           });
+
+          console.log('Successfully updated user bullets:', updatedUser);
         } catch (error) {
           console.error('Database operation failed:', error);
-          return res.status(500).json({ error: error.message });
+          // Don't return here, we still want to send 200 to Stripe
+          // Just log the error and continue
         }
         break;
 
@@ -62,9 +65,11 @@ export const handleStripeWebhook = async (req, res) => {
         console.log(`Unhandled event type: ${event.type}`);
     }
 
-    res.json({ received: true });
+    // Always return a 200 to Stripe
+    return res.status(200).json({ received: true });
   } catch (err) {
     console.error('Error in webhook handler:', err);
-    return res.status(400).json({ error: `Webhook Error: ${err.message}` });
+    // Still return 200 to prevent Stripe from retrying
+    return res.status(200).json({ received: true, error: err.message });
   }
 };

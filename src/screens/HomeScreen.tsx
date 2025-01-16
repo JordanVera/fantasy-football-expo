@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { CheckoutModal } from '@/src/components/modals/CheckoutModal';
+import { CheckoutActionSheet } from '@/src/components/actionsheets/CheckoutActionSheet';
 import MakePicksActionSheet from '@/src/components/actionsheets/MakePicksActionSheet';
 import UsersTable from '@/src/components/tables/UsersTable';
 import TeamAvailabilityTable from '@/src/components/tables/TeamAvailabilityTable';
@@ -26,7 +26,7 @@ export function HomeScreen() {
             <MakePicksActionSheet />
 
             <TouchableOpacity
-              className="w-1/2 p-2 rounded-md bg-primary bg-cyan-500"
+              className="flex-1 p-2 rounded-md bg-primary bg-cyan-500"
               onPress={() => setIsCheckoutModalVisible(true)}
             >
               <Text className="text-center text-white">Checkout</Text>
@@ -35,8 +35,8 @@ export function HomeScreen() {
 
           <UsersTable />
 
-          <CheckoutModal
-            visible={isCheckoutModalVisible}
+          <CheckoutActionSheet
+            isOpen={isCheckoutModalVisible}
             onClose={() => setIsCheckoutModalVisible(false)}
           />
         </View>
