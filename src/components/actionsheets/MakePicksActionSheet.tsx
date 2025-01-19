@@ -252,12 +252,13 @@ export default function MakePicksActionSheet() {
                 </View>
               );
             })}
-
-            <Button onPress={handleSubmit} className="w-full mt-4 bg-blue-600">
-              <ButtonText>Submit Picks</ButtonText>
-            </Button>
           </View>
         </ActionsheetScrollView>
+        <View className="w-full border-t border-zinc-400">
+          <Button onPress={handleSubmit} className="w-full mt-4 bg-blue-600">
+            <ButtonText>Submit Picks</ButtonText>
+          </Button>
+        </View>
       </>
     );
   };

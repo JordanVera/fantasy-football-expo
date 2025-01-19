@@ -24,7 +24,6 @@ export function HomeScreen() {
       <ScrollView className="flex-1 w-full">
         <View className="items-center justify-center w-full gap-5 p-4">
           <HomeScreenHero />
-          <TeamAvailabilityTable />
           <View className="flex flex-row items-center w-full gap-5">
             <MakePicksActionSheet />
 
@@ -36,6 +35,7 @@ export function HomeScreen() {
               <Icon as={CreditCardIcon} className="text-white" size={'md'} />
             </Button>
           </View>
+          <TeamAvailabilityTable />
 
           <UsersTable />
 
