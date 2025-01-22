@@ -29,7 +29,7 @@ export function HomeScreen() {
 
             <Button
               onPress={() => setIsCheckoutModalVisible(true)}
-              className="flex-1 bg-cyan-500"
+              className="flex-1 bg-indigo-500"
             >
               <ButtonText>Checkout</ButtonText>
               <Icon as={CreditCardIcon} className="text-white" size={'md'} />
