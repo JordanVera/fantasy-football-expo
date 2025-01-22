@@ -249,7 +249,7 @@ export default function MakePicksActionSheet() {
                             className="w-6 h-6"
                           />
                           <ButtonText
-                            className={`text-white ${
+                            className={`text-white font-medium ${
                               isDisabled ? 'opacity-50' : ''
                             }`}
                           >
@@ -264,7 +264,7 @@ export default function MakePicksActionSheet() {
             })}
           </View>
         </ActionsheetScrollView>
-        <View className="w-full border-t border-zinc-400">
+        <View className="w-full">
           <Button onPress={handleSubmit} className="w-full mt-4 bg-blue-600">
             <ButtonText>Submit Picks</ButtonText>
           </Button>
