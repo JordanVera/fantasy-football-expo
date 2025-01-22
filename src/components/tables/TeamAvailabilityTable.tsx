@@ -21,7 +21,7 @@ export default function TeamAvailabilityTable() {
 
   // Calculate team availability counts
   const teamCounts: TeamCounts = TEAMS.reduce((counts, team) => {
-    counts[team] = 0;
+    counts[team.abbreviation] = 0;
     return counts;
   }, {} as TeamCounts);
 
@@ -52,8 +52,8 @@ export default function TeamAvailabilityTable() {
 
         // For each team, check if this entry has already used it
         TEAMS.forEach((team) => {
-          if (!entryPicks.some((pick) => pick.team === team)) {
-            teamCounts[team]++;
+          if (!entryPicks.some((pick) => pick.team === team.abbreviation)) {
+            teamCounts[team.abbreviation]++;
           }
         });
       }
@@ -75,7 +75,7 @@ export default function TeamAvailabilityTable() {
                     index !== TEAMS.length - 1 ? 'border-r' : ''
                   }`}
                 >
-                  {team}
+                  {team.abbreviation}
                 </TableHead>
               ))}
             </TableRow>
@@ -90,11 +90,14 @@ export default function TeamAvailabilityTable() {
                   }`}
                 >
                   <View className="flex-col items-center w-full">
-                    <Text className="text-white">{teamCounts[team]}</Text>
+                    <Text className="text-white">
+                      {teamCounts[team.abbreviation]}
+                    </Text>
                     <Text className="text-xs text-gray-500">
                       {numberOfTotalActiveEntries
                         ? `${(
-                            (teamCounts[team] / numberOfTotalActiveEntries) *
+                            (teamCounts[team.abbreviation] /
+                              numberOfTotalActiveEntries) *
                             100
                           ).toFixed(1)}%`
                         : '0%'}
