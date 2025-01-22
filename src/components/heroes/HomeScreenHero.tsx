@@ -10,6 +10,21 @@ export function HomeScreenHero() {
   const { users, getTotalActiveEntries } = useUsers();
   const { user } = useAuth();
   const [currentWeek, setCurrentWeek] = useState<number>(1);
+  const [randomImage, setRandomImage] = useState<any>(null);
+
+  const backgroundImages = [
+    require('../../media/jettas.jpeg'),
+    require('../../media/mahomes.jpg'),
+    require('../../media/bigTruss.jpg'),
+    require('../../media/obj.jpg'),
+    require('../../media/ocho.jpg'),
+    require('../../media/ar12.jpg'),
+  ];
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    setRandomImage(backgroundImages[randomIndex]);
+  }, []);
 
   useEffect(() => {
     const fetchCurrentWeek = async () => {
@@ -41,11 +56,11 @@ export function HomeScreenHero() {
 
   return (
     <ImageBackground
-      source={require('../../media/jettas.jpeg')}
+      source={randomImage}
       className="object-cover w-full overflow-hidden rounded-lg object"
       // imageStyle={{}}
     >
-      <View className="w-full gap-4 p-5 bg-black/80">
+      <View className="w-full gap-4 p-5 bg-black/70">
         <Text className="text-2xl font-bold text-white ">
           Welcome, {user?.username || 'User'}!
         </Text>

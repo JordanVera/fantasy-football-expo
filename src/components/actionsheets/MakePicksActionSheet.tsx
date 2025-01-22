@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Button, ButtonText } from '@/src/components/ui/button';
+import { teamLogos } from '@/src/constants/teamLogos';
 
 import { Icon } from '@/src/components/ui/icon';
 import {
@@ -219,16 +220,21 @@ export default function MakePicksActionSheet() {
                   </Text>
                   <View className="flex-row flex-wrap gap-2">
                     {TEAMS.map((team) => {
-                      const isDisabled = isTeamPickedForEntry(team, index);
+                      const isDisabled = isTeamPickedForEntry(
+                        team.abbreviation,
+                        index
+                      );
                       const isSelected = picks.find(
-                        (p) => p.entry === index && p.pick === team
+                        (p) => p.entry === index && p.pick === team.abbreviation
                       );
 
                       return (
                         <Button
-                          key={team}
+                          key={team.abbreviation}
                           variant={'solid'}
-                          onPress={() => handlePickChange(team, index)}
+                          onPress={() =>
+                            handlePickChange(team.abbreviation, index)
+                          }
                           disabled={isDisabled}
                           className={`flex-grow basis-[23%] ${
                             isSelected
@@ -238,12 +244,16 @@ export default function MakePicksActionSheet() {
                               : 'bg-zinc-700'
                           }`}
                         >
+                          <Image
+                            source={teamLogos[team.abbreviation]}
+                            className="w-6 h-6"
+                          />
                           <ButtonText
                             className={`text-white ${
                               isDisabled ? 'opacity-50' : ''
                             }`}
                           >
-                            {team}
+                            {team.abbreviation}
                           </ButtonText>
                         </Button>
                       );
