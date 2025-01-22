@@ -110,7 +110,7 @@ export default function NewTable() {
   }
 
   return (
-    <View className="w-full">
+    <View className="w-full ">
       <ScrollView horizontal className="w-full">
         <Table className="w-full border rounded-lg border-zinc-700">
           <TableHeader>
