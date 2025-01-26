@@ -15,6 +15,7 @@ import {
 } from '../utils/notifications';
 import * as Notifications from 'expo-notifications';
 import { api } from '../services/ApiService';
+import { Button, ButtonText } from '../components/ui/button';
 
 export function SettingsScreen() {
   const { user, logout } = useAuth();
@@ -52,20 +53,36 @@ export function SettingsScreen() {
   // };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-black">
       <ScrollView>
         {/* Account Section */}
         <View className="p-4 border-b border-gray-700">
           <Text className="mb-4 text-lg font-bold text-white">Account</Text>
-          <View className="mb-2">
+          <View className="mb-4">
             <Text className="text-gray-400">Username</Text>
             <Text className="text-white">{user?.username}</Text>
           </View>
-          <View className="mb-2">
-            <Text className="text-gray-400">Email</Text>
-            <Text className="text-white">{user?.email}</Text>
+
+          <View className="flex-row items-center justify-between mb-4">
+            <View>
+              <Text className="text-gray-400">Email</Text>
+              <Text className="text-white">{user?.email}</Text>
+            </View>
+            <Button className="bg-zinc-700">
+              <ButtonText>Update</ButtonText>
+            </Button>
           </View>
-          <View className="mb-2">
+          <View className="flex-row items-center justify-between mb-4">
+            <View>
+              <Text className="text-gray-400">Password</Text>
+              <Text className="text-white">********</Text>
+            </View>
+            <Button className="bg-zinc-700">
+              <ButtonText>Update</ButtonText>
+            </Button>
+          </View>
+
+          <View className="mb-4">
             <Text className="text-gray-400">Active Entries</Text>
             <Text className="text-white">{user?.bullets || 0}</Text>
           </View>
