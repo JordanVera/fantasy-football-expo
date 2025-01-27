@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
-import {
-  registerWeeklyNotification,
-  registerForPushNotifications,
-} from '../utils/notifications';
+// import {
+//   registerWeeklyNotification,
+//   registerForPushNotifications,
+// } from '../utils/notifications';
 import * as Notifications from 'expo-notifications';
 import { api } from '../services/ApiService';
 import { Button, ButtonText } from '../components/ui/button';
