@@ -2,8 +2,6 @@ import { useState } from 'react';
 import {
   SafeAreaView,
   View,
-  Text,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 
