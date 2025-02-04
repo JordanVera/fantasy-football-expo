@@ -10,7 +10,7 @@ import RULES from '../types/RULES';
 
 export function RulesScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-black">
+    <View className="flex-1 bg-black">
       <ImageBackground
         source={require('../media/bigTruss.jpg')}
         className="flex-1"
@@ -39,6 +39,6 @@ export function RulesScreen() {
           </View>
         </ScrollView>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 }
