@@ -7,6 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
+  ImageBackground,
 } from 'react-native';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
@@ -72,131 +73,139 @@ export function AuthScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View className="flex-1 bg-black">
-        <View className="items-center justify-center flex-1 px-8">
-          <View className="w-full max-w-sm">
-            <Image
-              source={require('../media/logo.png')}
-              className="!w-28 !h-28 mx-auto"
-            />
-            <Text className="mb-8 text-2xl font-bold text-center text-white">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
-            </Text>
+      <ImageBackground
+        source={require('../media/ocho.jpg')}
+        className="flex-1"
+        resizeMode="cover"
+      >
+        <View className="flex-1 bg-black/50">
+          <View className="items-center justify-center flex-1 px-8">
+            <View className="w-full max-w-sm p-4 rounded-lg bg-black/80">
+              <Image
+                source={require('../media/logo.png')}
+                className="!w-28 !h-28 mx-auto"
+              />
+              <Text className="mb-8 text-2xl font-bold text-center text-white">
+                {isLogin ? 'Welcome Back' : 'Create Account'}
+              </Text>
 
-            <View className="flex flex-col gap-5 mb-6">
-              {!isLogin && (
-                <>
-                  <View className="flex flex-row gap-2">
+              <View className="flex flex-col gap-5 mb-6">
+                {!isLogin && (
+                  <View className="flex flex-col gap-4">
+                    <View className="flex flex-row gap-2">
+                      <TextInput
+                        className="flex-1 px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                        placeholder="First Name"
+                        value={firstname}
+                        onChangeText={setFirstname}
+                        placeholderTextColor="#6B7280"
+                      />
+
+                      <TextInput
+                        className="flex-1 px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                        placeholder="Last Name"
+                        value={lastname}
+                        onChangeText={setLastname}
+                        placeholderTextColor="#6B7280"
+                      />
+                    </View>
+
                     <TextInput
-                      className="flex-1 px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                      placeholder="First Name"
-                      value={firstname}
-                      onChangeText={setFirstname}
+                      className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                      placeholder="Username"
+                      value={username}
+                      onChangeText={setUsername}
+                      autoCapitalize="none"
                       placeholderTextColor="#6B7280"
                     />
 
                     <TextInput
-                      className="flex-1 px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                      placeholder="Last Name"
-                      value={lastname}
-                      onChangeText={setLastname}
+                      className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                      placeholder="Phone Number"
+                      value={phoneNumber}
+                      onChangeText={setPhoneNumber}
+                      keyboardType="phone-pad"
                       placeholderTextColor="#6B7280"
                     />
                   </View>
+                )}
 
-                  <TextInput
-                    className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={setUsername}
-                    autoCapitalize="none"
-                    placeholderTextColor="#6B7280"
-                  />
-
-                  <TextInput
-                    className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                    placeholder="Phone Number"
-                    value={phoneNumber}
-                    onChangeText={setPhoneNumber}
-                    keyboardType="phone-pad"
-                    placeholderTextColor="#6B7280"
-                  />
-                </>
-              )}
-
-              <TextInput
-                className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                placeholderTextColor="#6B7280"
-              />
-
-              <TextInput
-                className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                placeholderTextColor="#6B7280"
-              />
-
-              {!isLogin && (
                 <TextInput
                   className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  placeholderTextColor="#6B7280"
+                />
+
+                <TextInput
+                  className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
                   secureTextEntry
                   placeholderTextColor="#6B7280"
                 />
+
+                {!isLogin && (
+                  <TextInput
+                    className="w-full px-4 py-2 text-white bg-gray-800 border border-gray-700 rounded-full placeholder:text-gray-500"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                    placeholderTextColor="#6B7280"
+                  />
+                )}
+                <TouchableOpacity
+                  className="w-full px-6 py-3 bg-blue-600 rounded-full"
+                  onPress={handleSubmit}
+                >
+                  <Text className="font-semibold text-center text-white">
+                    {isLogin ? 'Login' : 'Sign Up'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {isLogin && (
+                <Pressable
+                  onPress={() => setShowForgotPassword(true)}
+                  className="flex flex-row justify-center w-full"
+                >
+                  <Text className="mb-5 text-blue-500">
+                    I forgot my password
+                  </Text>
+                </Pressable>
               )}
-              <TouchableOpacity
-                className="w-full px-6 py-3 bg-blue-600 rounded-full"
-                onPress={handleSubmit}
-              >
-                <Text className="font-semibold text-center text-white">
-                  {isLogin ? 'Login' : 'Sign Up'}
+
+              {error ? (
+                <Text className="mb-4 text-sm text-center text-red-500">
+                  {error}
+                </Text>
+              ) : null}
+
+              <TouchableOpacity onPress={toggleAuthMode}>
+                <Text className="text-center">
+                  <Text className="text-white">
+                    {isLogin
+                      ? "Don't have an account? "
+                      : 'Already have an account? '}
+                  </Text>
+                  <Text className="text-blue-400">
+                    {isLogin ? 'Sign up' : 'Login'}
+                  </Text>
                 </Text>
               </TouchableOpacity>
             </View>
-
-            {isLogin && (
-              <Pressable
-                onPress={() => setShowForgotPassword(true)}
-                className="flex flex-row justify-center w-full"
-              >
-                <Text className="mb-5 text-blue-500">I forgot my password</Text>
-              </Pressable>
-            )}
-
-            {error ? (
-              <Text className="mb-4 text-sm text-center text-red-500">
-                {error}
-              </Text>
-            ) : null}
-
-            <TouchableOpacity onPress={toggleAuthMode}>
-              <Text className="text-center">
-                <Text className="text-white">
-                  {isLogin
-                    ? "Don't have an account? "
-                    : 'Already have an account? '}
-                </Text>
-                <Text className="text-blue-400">
-                  {isLogin ? 'Sign up' : 'Login'}
-                </Text>
-              </Text>
-            </TouchableOpacity>
           </View>
+          <ForgotPasswordModal
+            isVisible={showForgotPassword}
+            onClose={() => setShowForgotPassword(false)}
+          />
         </View>
-        <ForgotPasswordModal
-          isVisible={showForgotPassword}
-          onClose={() => setShowForgotPassword(false)}
-        />
-      </View>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }

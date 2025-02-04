@@ -19,6 +19,7 @@ export class ApiService {
   }
 
   async login(email: string, password: string) {
+    console.log('API_URL', API_URL);
     const response = await fetch(`${this.baseUrl}/auth/login`, {
       method: 'POST',
       headers: {
